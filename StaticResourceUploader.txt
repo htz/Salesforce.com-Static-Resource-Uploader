@@ -1,0 +1,544 @@
+<link type="text/css" rel="stylesheet" href="https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css" media="screen" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://raw.github.com/jquery/jquery-tmpl/master/jquery.tmpl.js"></script>
+<script type="text/javascript" src="https://github.com/yatt/jquery.base64/raw/master/jquery.base64.js"></script>
+<script type="text/javascript">
+	var __sfdcSessionId;
+	if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
+</script>
+<script type="text/javascript" src="/soap/ajax/23.0/connection.js"></script>
+<script type="text/javascript" src="https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js"></script>
+<script type="text/javascript" src="https://raw.github.com/hinassan/zipjs/master/zip.min.js"></script>
+<script type="text/javascript" src="https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/StaticResourceUploader.js"></script>
+<script id="taticresource_new" type="text/x-jquery-tmpl">
+	<tr id="${id}" class="dataRow">
+		<td class="dataCell">
+			<input class="dosave" type="button" value="Save" /><br />
+			<input class="cancel" type="button" value="Cancel" />
+		</td>
+		<td class="dataCell">${$.escapeHTML(file.name)}</td>
+		<td class="dataCell">
+			<input class="developerName" type="text" value="${file.name.replace(/\W+/g, '_')}" />
+		</td>
+		<td class="dataCell"><textarea class="description"></textarea></td>
+		<td class="dataCell">${$.escapeHTML(file.type)}</td>
+		<td class="dataCell image">
+		{{if image}}
+			<img id="img_${id}" class="thumbnail" src="${image}" />
+		{{/if}}
+		</td>
+		<td class="dataCell numericalColumn size">${$.commaStyle(file.size)}</td>
+		<td class="dataCell">
+			<select class="cacheControl">
+				<option value="0">Private</option>
+				<option value="1">Public</option>
+			</select>
+		</td>
+		<td class="dataCell error"></td>
+	</tr>
+</script>
+<script id="staticresourcelist_view" type="text/x-jquery-tmpl">
+	<tr id="${id}" class="dataRow">
+		<td class="actionColumn">
+			<input class="select" type="checkbox" />
+		</td>
+		<td class="actionColumn">
+			<a class="actionLink edit" href="javascript:void(0);">Edit</a>
+			 | 
+			<a class="actionLink delete" href="javascript:void(0);">Del</a>
+			{{if object.ContentType.match(/(image|text|javascript|css|html|xml)/)}}
+				 | <a class="actionLink preview" href="javascript:void(0);">Preview</a>
+			{{/if}}
+			{{if object.ContentType.match(/zip/)}}
+				 | <a class="actionLink unzip" href="javascript:void(0);">Unzip</a>
+			{{/if}}
+		</td>
+		<td class="dataCell">
+			<a href="/resource/1311880464000/${object.Name}" target="_blank">${object.Name}</a>
+		</td>
+		<td class="dataCell">${$.escapeHTML(object.NamespacePrefix)}</td>
+		<td class="dataCell">${$.escapeHTML(object.Description).replace(/[\r?\n]/g, '<br />')}</td>
+		<td class="dataCell">${$.escapeHTML(object.ContentType)}</td>
+		<td class="dataCell image">
+		{{if object.ContentType.match(/image\/.*/)}}
+			<image id="img_${object.Id}" class="thumbnail" src="/resource/1311880464000/${object.Name}?_=${_}" />
+		{{/if}}
+		</td>
+		<td class="dataCell numericalColumn size">${$.commaStyle(object.BodyLength)}</td>
+		<td class="dataCell">{{if object.CacheControl}}${object.CacheControl}{{/if}}</td>
+		<td class="dataCell error"></td>
+	</tr>
+</script>
+<script id="staticresourcelist_edit" type="text/x-jquery-tmpl">
+	<tr id="${id}" class="dataRow">
+		<td class="actionColumn">&nbsp;</td>
+		<td class="actionColumn">
+			<input class="update" type="button" value="Save" /><br />
+			<input class="cancel" type="button" value="Cancel" />
+		</td>
+		<td class="dataCell">
+			<input class="developerName" type="text" value="${name}" />
+		</td>
+		<td class="dataCell">${object.NamespacePrefix}</td>
+		<td class="dataCell">
+			<textarea class="description">${description}</textarea>
+		</td>
+		<td class="dataCell type">
+			{{if file}}
+				<span class="red">${file.type}</span><br /><span class="red">(${file.name})</span>
+			{{else}}
+				${object.ContentType}
+			{{/if}}
+		</td>
+		<td class="dataCell image">
+			{{if image}}
+				<img id="img_${object.Id}" class="thumbnail" src="${image}" />
+			{{else object.ContentType.match(/image\/.*/)}}
+				<image id="img_${object.Id}" class="thumbnail" src="/resource/1311880464000/${object.Name}?_=${_}" />
+			{{/if}}
+		</td>
+		<td class="dataCell numericalColumn size">${$.commaStyle(object.BodyLength)}</td>
+		<td class="dataCell">
+			<select class="cacheControl">
+				<option value="0" {{if object.CacheControl && object.CacheControl == 'Private'}}selected="selected" {{/if}}>Private</option>
+				<option value="1" {{if object.CacheControl && object.CacheControl == 'Public'}}selected="selected" {{/if}}>Public</option>
+			</select>
+		</td>
+		<td class="dataCell error"></td>
+	</tr>
+</script>
+<script id="preview_text" type="text/x-jquery-tmpl">
+	<div class="dummy">
+		<input id="linenumber" type="checkbox" {{if linenumber}}checked="checked" {{/if}}/>
+		<label for="linenumber">Line number</label><br/>
+		<pre id="${id}" class="prettyprint{{if linenumber}} linenums{{/if}}">${text}</pre>
+	</div>
+</script>
+<script id="preview_image" type="text/x-jquery-tmpl">
+	<div class="dummy">
+		<img src="/resource/1311880464000/${object.Name}?_=${_}" />
+	</div>
+</script>
+<script id="unzip" type="text/x-jquery-tmpl">
+	<tr id="${id}" class="dataRow unzipRow">
+		<td class="actionColumn"></td>
+		<td class="actionColumn"><a class="actionLink closeunzip" href="javascript:void(0);">Close</a></td>
+		<td colspan="8">
+			{{tmpl({files: files, base_url: base_url}) "#unzip_dir"}}
+		</td>
+	</tr>
+</script>
+<script id="unzip_dir" type="text/x-jquery-tmpl">
+	<ul class="{{if files['$dir']}}{{else}}root{{/if}}" style="{{if files['$dir']}}display: none;{{/if}}">
+		{{each files}}
+		{{if $index != '$dir'}}
+			{{if $value['$dir']}}
+			<li class="dir">
+				<img src="/s.gif" />
+				<a class="dirtoggle" href="javascript:void(0);">${$index}</a>
+				{{tmpl({files: $value, base_url: base_url}) "#unzip_dir"}}
+			</li>
+			{{else}}
+			<li class="file">
+				<img src="/s.gif" />
+				<a href="${base_url}/${$value.name}" target="_blank">${$index}</a>
+			</li>
+			{{/if}}
+		{{/if}}
+		{{/each}}
+	</ul>
+</script>
+<script id="preview_window" type="text/x-jquery-tmpl">
+	<div id="previewWindow" class="overlayDialog" style="top: ${top}px; left: ${left}px;">
+		<div class="topRight">
+			<div class="topLeft">
+				<img title="close" id="followingDialogX" class="dialogClose" src="/s.gif" />
+				<h2 id="followingDialogTitle">${title}</h2>
+			</div>
+		</div>
+		<div class="middle">{{html html}}</div>
+		<div class="bottomRight">
+			<div class="bottomLeft">
+			</div>
+		</div>
+		<div class="resize">&nbsp;</div>
+	</div>
+</script>
+<style type="text/css">
+#StaticResourceUploader #uploadtab {
+	margin: 0;
+	padding: 0;
+}
+#StaticResourceUploader #uploadtab ul {
+	list-style-type: none;
+	margin-left: 4px;
+	padding: 0;
+}
+#StaticResourceUploader #uploadtab li {
+	float: left;
+	height: 16px;
+	padding: 4px 8px;
+	margin: 0 4px 0 0;
+	background-color: #ccc;
+	border-radius: 4px 4px 0 0;
+	font-weight: bold;
+	cursor: pointer;
+}
+#StaticResourceUploader #uploadtab li.active {
+	background-color: #1797C0;
+	color: white;
+	cursor: default;
+}
+#StaticResourceUploader #newtab #droparea {
+	border: 3px dashed #aaa;
+	border-radius: 8px;
+	text-align: center;
+	color: #aaa;
+	margin-bottom: 8px;
+}
+#StaticResourceUploader #newtab #droparea p {
+	line-height: 90px;
+	margin: 0;
+	font-size: 3em;
+}
+#StaticResourceUploader #newtab #droparea.dragenter {
+	border: 3px dashed red !important;
+	color: red !important;
+}
+
+#StaticResourceUploader #edittab #filter {
+	height: 20px;
+	margin-bottom: 8px;
+}
+#StaticResourceUploader #edittab #filter input,
+#StaticResourceUploader #edittab #filter select {
+	margin: 0;
+	padding: 0;
+}
+#StaticResourceUploader #edittab #filter dt {
+	float: left;
+	line-height: 20px;
+	margin: 0 4px 0 0;
+}
+#StaticResourceUploader #edittab #filter dd {
+	float: left;
+	line-height: 20px;
+	margin: 0 8px 0 0;
+}
+#StaticResourceUploader #edittab #staticresourcelist .developerName {
+	 width: 120px;
+}
+#StaticResourceUploader #edittab #staticresourcelist .description {
+	width: 200px;
+	height: 3em;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order {
+	cursor: pointer;
+}
+#StaticResourceUploader #edittab #staticresourcelist .noorder {
+	cursor: not-allowed;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.over {
+	background: white url('/img/alohaSkin/grid_headerbg_over.gif') 0 bottom repeat-x;
+	color: #015BA7;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.sortAsc,
+#StaticResourceUploader #edittab #staticresourcelist .order.sortDesc {
+	background: #C4E7F2 none repeat scroll 0 0;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.sortAsc .x-grid3-sort-icon,
+#StaticResourceUploader #edittab #staticresourcelist .order.sortDesc .x-grid3-sort-icon{
+	width: 11px;
+	height: 11px;
+	margin: 0 5px;
+	vertical-align: -2px;
+	background: transparent url(/img/alohaSkin/sortArrows_sprite.png) no-repeat 0 top;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.sortAsc .x-grid3-sort-icon{
+	background-position:0 -16px;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.sortDesc .x-grid3-sort-icon{
+	background-position:0 top;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.over.sortAsc .x-grid3-sort-icon{
+	background-position:0 -48px;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.over.sortDesc .x-grid3-sort-icon{
+	background-position:0 -32px;
+}
+
+.overlayDialog .topRight {
+	cursor: move;
+}
+#previewWindow {
+	background-color: white;
+	position: absolute;
+	z-index: 101;
+	margin: 0;
+	display: block;
+	visibility: visible;
+	border-radius: 6px;
+	min-width: 100px;
+	min-height: 100px;
+}
+#previewWindow .middle {
+	padding: 5px 5px 0 5px;
+}
+#previewWindow .middle pre {
+	border: none;
+	margin: 0;
+	padding: 0;
+	max-width: 1000px;
+	max-height: 800px;
+	overflow: scroll;
+}
+#previewWindow .resize {
+	position: absolute;
+	width: 22px;
+	height: 22px;
+	bottom: 0;
+	right: 0;
+	cursor: se-resize;
+}
+#previewWindow .bottomRight {
+	cursor: n-resize;
+}
+
+#StaticResourceUploader .list {
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin-bottom: 10px;
+}
+#StaticResourceUploader .list tbody tr.dataRow.selected ,
+#StaticResourceUploader .list tbody tr.dataRow.selected.highlight td {
+	background: #b0e1fa !important;
+}
+#StaticResourceUploader .list td.dataCell {
+	vertical-align: top;
+}
+#StaticResourceUploader .list td.dataCell.numericalColumn {
+	white-space:nowrap
+}
+#StaticResourceUploader tr.dragenter {
+	border: 3px dashed red !important;
+	background-color: yellow;
+}
+#StaticResourceUploader .red {
+	color: red;
+	font-weight: bold;
+}
+#StaticResourceUploader .thumbnail {
+	width: 40px;
+	max-height: 120px;
+}
+#StaticResourceUploader tfoot tr td {
+	padding: 5px;
+	background: #F2F2F2 url('/img/alohaSkin/listFooter.png') repeat-x;
+}
+
+.overlay {
+	width: 2000px;
+	height: 2000px;
+	background-color: #222;
+	opacity: 0.6;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
+	list-style-type: decimal;
+}
+
+.unzipRow {
+	position: relative;
+}
+.unzipRow ul {
+	position: relative;
+	left: -18px;
+	margin: 0;
+	padding: 0 0 0 16px;
+	/* │ */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAAF0lEQVR42mNgoCH4zzBQYNTmUZtHpM0ANmIH+ddU/ZcAAAAASUVORK5CYII=);
+	background-repeat: repeat-y;
+	background-position: 0 0;
+}
+.unzipRow ul.root, .unzipRow ul.root > li.dir > ul {
+	background-image: none;
+	padding: 0;
+	left: 0;
+}
+.unzipRow li {
+	margin: 0;
+	padding: 0 0 0 18px;
+	min-height: 16px;
+	list-style: none;
+	/* ├ */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAACgCAYAAADTnDZxAAAARElEQVR42u3QoQ0AAAgDwe6/NEyAJAjuTeUlTRarXPVZntbbZDKZTCaTyWQymUwmk8lkMplMJpPJZDKZTCaTyWTyM7kB/BBSrsOMEs4AAAAASUVORK5CYII=);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+.unzipRow li.last {
+	/* └ */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAAGUlEQVR42mNgoCH4zzBQYCTbjIseBSMAAADC8Qb6rJ5JAwAAAABJRU5ErkJggg==);
+}
+.unzipRow ul.root > li {
+	background-image: none !important;
+	padding: 0;
+}
+.unzipRow li img {
+	float: left;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+}
+.unzipRow li.dir img {
+	/* フォルダ */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAABP0lEQVR42mNggIKjBxb8P7SrCowPH1j3n4EYsH/3vP8/300D41/vZ/3/8nLq/907luPXvHXDDLDCL0+b/394WAfG3160/n9zt+b/psVZWPGy2eX/GbbO9fr/60n1/7fXc/+/v5EHx5/uFP///rASA/950fD/9g7f/wyr+rz+f7ud+//tpRSiMEjt1dk6/xlWdrr+/3oj5f+bszH/38JxLJAPwSA+TA5Ef7qSDNG4osXx/5dLMf9fHw8B4zcnIBjGh4nB2J/OR0I0Lm+0+f/pdOD/Vwe9icIgtVcmK/9nWFJl/v/zMY//L3c74cAuKPz3h90RGj/ut/v/fLPl/xdbgHizOYK9xRzMh7AtweLvdtv8v9Yv859hcZbc/297Tf+/3Wzw/90WwhikFqyxp6H4/7zWzP8zW4jDILXTGtL+AwDReLcs6dQ7BgAAAABJRU5ErkJggg==);
+}
+.unzipRow li.file img {
+	/* ファイル */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVQ4ja2SsQ2DMBREz1ZETUVNR5sV0noyROVpPmVWyAJUDOB00JhLE1uYAgzJq/xl3fPXyYok+r4njnkDeBhjXgBAfiMkISLcQ0Q4DANFxInIPeRIQme8DACo6xpN05QAnkECIE/gnIPWOpGEu1uOYBxHtG0b56qqyjjkdLCl6zqe7mCN9z6eLwnW/CxISoyfYwel1HXBNvz/DZZlOQxrndZ2eoMtiaAoimuCaZpgrcU8z6cFH463oU6M2P/DAAAAAElFTkSuQmCC);
+}
+</style>
+<div id="StaticResourceUploader" class="bRelatedList" style="display: none;">
+	<div id="uploadtab">
+		<ul>
+			<li id="newtab" class="active">New Static Resource</li>
+			<li id="edittab">View/Edit Static Resource</li>
+		</ul>
+	</div>
+	<div id="newtab" class="bPageBlock">
+		<div class="pbBody">
+			<div id="droparea">
+				<p>Drop static resource files.</p>
+			</div>
+			<div id="uploadlistbox" style="display: none;">
+				<table id="uploadlist" class="list">
+					<thead>
+						<tr class="headerRow">
+							<th scope="col">Action</th>
+							<th scope="col">File name</th>
+							<th scope="col" style="width: 130px;">Name</th>
+							<th scope="col" style="width: 210px;">Description</th>
+							<th scope="col">MIME Type</th>
+							<th scope="col">Image</th>
+							<th scope="col">Size</th>
+							<th scope="col">Cache Control</th>
+							<th scope="col">Error</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<div style="text-align: right;">
+					<input id="cancelall" type="button" value="Cancel All" />
+					<input id="dosaveall" type="button" value="Save All" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="edittab" class="bPageBlock" style="display: none;">
+		<div class="pbBody">
+			<div id="filter">
+				<input id="order" type="hidden" value="Name" />
+				<input id="asc" type="hidden" value="ASC" />
+				<dl>
+					<dt>Name:</dt>
+					<dd><input id="name" type="text" /></dd>
+					<dt>Namespace Prefix:</dt>
+					<dd><select id="prefix"><option value=""></option></select></dd>
+					<dt>Type:</dt>
+					<dd>
+						<select id="type">
+							<option value="">All</option>
+							<option value="css">CSS</option>
+							<option value="javascript">JavaScript</option>
+							<option value="image">Image</option>
+							<option value="text">Text</option>
+							<option value="zip">Zip</option>
+							<option value="other">Other</option>
+						</select>
+					</dd>
+					<dt>Cache Control:</dt>
+					<dd>
+						<select id="cache">
+							<option value="">All</option>
+							<option value="Private">Private</option>
+							<option value="Public">Public</option>
+						</select>
+					</dd>
+					<!-- dt>Limit:</dt>
+					<dd>
+						<select id="limit">
+							<option value="10">10</option>
+							<option value="25">25</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+							<option value="200">200</option>
+						</select>
+					</dd -->
+					<dt>
+						<input id="refresh" type="button" value="Refresh" />
+						&nbsp;|&nbsp;
+						<input id="deleteselected" type="button" value="Delete Selected" disabled="disabled" />
+					</dt>
+					<dd style="clear: left;"></dd>
+				</dl>
+			</div>
+			<table id="staticresourcelist" class="list">
+				<thead>
+					<tr class="headerRow">
+						<th scope="col" style="width: 21px;"><input id="selectall" type="checkbox" /></th>
+						<th scope="col" class="actionColumn">Action</th>
+						<th scope="col" id="Name" class="order sortAsc" style="width: 130px;">Name</th>
+						<th scope="col" id="NamespacePrefix" class="order" style="width: 210px;">Namespace Prefix</th>
+						<th scope="col" id="Description" class="noorder">Description</th>
+						<th scope="col" id="ContentType" class="order">MIME Type</th>
+						<th scope="col" class="noorder">Image</th>
+						<th scope="col" id="BodyLength" class="order">Size</th>
+						<th scope="col" id="CacheControl" class="order">Cache Control</th>
+						<th scope="col" class="noorder">Error</th>
+					</tr>
+				</thead>
+				<!-- tfoot>
+					<tr>
+						<td colspan="10">
+							<div class="paginator">
+								<span class="prevNextLinks">
+									<span class="prevNext">
+										<a href="javascript:void(0);">
+											<img src="/s.gif" title="First Page" alt="First Page" class="first" />
+										</a>
+									</span>
+									<span class="prevNext">
+										<a href="javascript:void(0);">
+											<img src="/s.gif" title="Previous" alt="Previous" class="prev" />
+											Previous
+										</a>
+									</span>
+									<span class="prevNext">
+										<a href="javascript:void(0);">
+											Next
+											<img src="/s.gif" title="Next" alt="Next" class="next" />
+										</a>
+									</span>
+									<a href="javascript:void(0);">
+										<img src="/s.gif" title="Last Page" alt="Last Page" class="last" />
+									</a>
+								</span>
+								<span class="right">
+									Page
+									<input id="page" class="pageInput" type="number" maxlength="4" onchange="void();" onkeydown="" value="1">
+									of n
+								</span>
+							</div>
+						</td>
+					</tr>
+				</tfoot -->
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
