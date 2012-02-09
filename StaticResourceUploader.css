@@ -206,13 +206,11 @@ li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
 	padding: 0 0 0 18px;
 	min-height: 16px;
 	list-style: none;
-	/* ├ */
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAACgCAYAAADTnDZxAAAARElEQVR42u3QoQ0AAAgDwe6/NEyAJAjuTeUlTRarXPVZntbbZDKZTCaTyWQymUwmk8lkMplMJpPJZDKZTCaTyWTyM7kB/BBSrsOMEs4AAAAASUVORK5CYII=);
 	background-repeat: no-repeat;
 	background-position: 0 0;
 }
 .unzipRow li.last {
-	/* └ */
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAAGUlEQVR42mNgoCH4zzBQYCTbjIseBSMAAADC8Qb6rJ5JAwAAAABJRU5ErkJggg==);
 }
 .unzipRow ul.root > li {
@@ -226,11 +224,9 @@ li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
 	background-repeat: no-repeat;
 }
 .unzipRow li.dir img {
-	/* フォルダ */
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAABP0lEQVR42mNggIKjBxb8P7SrCowPH1j3n4EYsH/3vP8/300D41/vZ/3/8nLq/907luPXvHXDDLDCL0+b/394WAfG3160/n9zt+b/psVZWPGy2eX/GbbO9fr/60n1/7fXc/+/v5EHx5/uFP///rASA/950fD/9g7f/wyr+rz+f7ud+//tpRSiMEjt1dk6/xlWdrr+/3oj5f+bszH/38JxLJAPwSA+TA5Ef7qSDNG4osXx/5dLMf9fHw8B4zcnIBjGh4nB2J/OR0I0Lm+0+f/pdOD/Vwe9icIgtVcmK/9nWFJl/v/zMY//L3c74cAuKPz3h90RGj/ut/v/fLPl/xdbgHizOYK9xRzMh7AtweLvdtv8v9Yv859hcZbc/297Tf+/3Wzw/90WwhikFqyxp6H4/7zWzP8zW4jDILXTGtL+AwDReLcs6dQ7BgAAAABJRU5ErkJggg==);
 }
 .unzipRow li.file img {
-	/* ファイル */
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVQ4ja2SsQ2DMBREz1ZETUVNR5sV0noyROVpPmVWyAJUDOB00JhLE1uYAgzJq/xl3fPXyYok+r4njnkDeBhjXgBAfiMkISLcQ0Q4DANFxInIPeRIQme8DACo6xpN05QAnkECIE/gnIPWOpGEu1uOYBxHtG0b56qqyjjkdLCl6zqe7mCN9z6eLwnW/CxISoyfYwel1HXBNvz/DZZlOQxrndZ2eoMtiaAoimuCaZpgrcU8z6cFH463oU6M2P/DAAAAAElFTkSuQmCC);
 }
 
