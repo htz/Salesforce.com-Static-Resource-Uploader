@@ -201,6 +201,9 @@ li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
 	padding: 0;
 	left: 0;
 }
+.unzipRow li.last > ul {
+	background-image: none;
+}
 .unzipRow li {
 	margin: 0;
 	padding: 0 0 0 18px;
