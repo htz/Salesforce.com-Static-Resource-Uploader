@@ -1,3 +1,6 @@
+var __sfdcSessionId;
+if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
+
 (function ($) {
 	$.fn.extend({
 		imageSize: function(callback) {

@@ -1,0 +1,238 @@
+@charset "utf-8";
+
+#StaticResourceUploader #uploadtab {
+	margin: 0;
+	padding: 0;
+}
+#StaticResourceUploader #uploadtab ul {
+	list-style-type: none;
+	margin-left: 4px;
+	padding: 0;
+}
+#StaticResourceUploader #uploadtab li {
+	float: left;
+	height: 16px;
+	padding: 4px 8px;
+	margin: 0 4px 0 0;
+	background-color: #ccc;
+	border-radius: 4px 4px 0 0;
+	font-weight: bold;
+	cursor: pointer;
+}
+#StaticResourceUploader #uploadtab li.active {
+	background-color: #1797C0;
+	color: white;
+	cursor: default;
+}
+#StaticResourceUploader #newtab #droparea {
+	border: 3px dashed #aaa;
+	border-radius: 8px;
+	text-align: center;
+	color: #aaa;
+	margin-bottom: 8px;
+}
+#StaticResourceUploader #newtab #droparea p {
+	line-height: 90px;
+	margin: 0;
+	font-size: 3em;
+}
+#StaticResourceUploader #newtab #droparea.dragenter {
+	border: 3px dashed red !important;
+	color: red !important;
+}
+
+#StaticResourceUploader #edittab #filter {
+	height: 20px;
+	margin-bottom: 8px;
+}
+#StaticResourceUploader #edittab #filter input,
+#StaticResourceUploader #edittab #filter select {
+	margin: 0;
+	padding: 0;
+}
+#StaticResourceUploader #edittab #filter dt {
+	float: left;
+	line-height: 20px;
+	margin: 0 4px 0 0;
+}
+#StaticResourceUploader #edittab #filter dd {
+	float: left;
+	line-height: 20px;
+	margin: 0 8px 0 0;
+}
+#StaticResourceUploader #edittab #staticresourcelist .developerName {
+	 width: 120px;
+}
+#StaticResourceUploader #edittab #staticresourcelist .description {
+	width: 200px;
+	height: 3em;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order {
+	cursor: pointer;
+}
+#StaticResourceUploader #edittab #staticresourcelist .noorder {
+	cursor: not-allowed;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.over {
+	background: white url('/img/alohaSkin/grid_headerbg_over.gif') 0 bottom repeat-x;
+	color: #015BA7;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.sortAsc,
+#StaticResourceUploader #edittab #staticresourcelist .order.sortDesc {
+	background: #C4E7F2 none repeat scroll 0 0;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.sortAsc .x-grid3-sort-icon,
+#StaticResourceUploader #edittab #staticresourcelist .order.sortDesc .x-grid3-sort-icon{
+	width: 11px;
+	height: 11px;
+	margin: 0 5px;
+	vertical-align: -2px;
+	background: transparent url(/img/alohaSkin/sortArrows_sprite.png) no-repeat 0 top;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.sortAsc .x-grid3-sort-icon{
+	background-position:0 -16px;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.sortDesc .x-grid3-sort-icon{
+	background-position:0 top;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.over.sortAsc .x-grid3-sort-icon{
+	background-position:0 -48px;
+}
+#StaticResourceUploader #edittab #staticresourcelist .order.over.sortDesc .x-grid3-sort-icon{
+	background-position:0 -32px;
+}
+
+.overlayDialog .topRight {
+	cursor: move;
+}
+#previewWindow {
+	background-color: white;
+	position: absolute;
+	z-index: 101;
+	margin: 0;
+	display: block;
+	visibility: visible;
+	border-radius: 6px;
+	min-width: 100px;
+	min-height: 100px;
+}
+#previewWindow .middle {
+	padding: 5px 5px 0 5px;
+}
+#previewWindow .middle pre {
+	border: none;
+	margin: 0;
+	padding: 0;
+	max-width: 1000px;
+	max-height: 800px;
+	overflow: scroll;
+}
+#previewWindow .resize {
+	position: absolute;
+	width: 22px;
+	height: 22px;
+	bottom: 0;
+	right: 0;
+	cursor: se-resize;
+}
+#previewWindow .bottomRight {
+	cursor: n-resize;
+}
+
+#StaticResourceUploader .list {
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin-bottom: 10px;
+}
+#StaticResourceUploader .list tbody tr.dataRow.selected ,
+#StaticResourceUploader .list tbody tr.dataRow.selected.highlight td {
+	background: #b0e1fa !important;
+}
+#StaticResourceUploader .list td.dataCell {
+	vertical-align: top;
+}
+#StaticResourceUploader .list td.dataCell.numericalColumn {
+	white-space:nowrap
+}
+#StaticResourceUploader tr.dragenter {
+	border: 3px dashed red !important;
+	background-color: yellow;
+}
+#StaticResourceUploader .red {
+	color: red;
+	font-weight: bold;
+}
+#StaticResourceUploader .thumbnail {
+	width: 40px;
+	max-height: 120px;
+}
+#StaticResourceUploader tfoot tr td {
+	padding: 5px;
+	background: #F2F2F2 url('/img/alohaSkin/listFooter.png') repeat-x;
+}
+
+.overlay {
+	width: 2000px;
+	height: 2000px;
+	background-color: #222;
+	opacity: 0.6;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
+	list-style-type: decimal;
+}
+
+.unzipRow {
+	position: relative;
+}
+.unzipRow ul {
+	position: relative;
+	left: -18px;
+	margin: 0;
+	padding: 0 0 0 16px;
+	/* │ */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAAF0lEQVR42mNgoCH4zzBQYNTmUZtHpM0ANmIH+ddU/ZcAAAAASUVORK5CYII=);
+	background-repeat: repeat-y;
+	background-position: 0 0;
+}
+.unzipRow ul.root, .unzipRow ul.root > li.dir > ul {
+	background-image: none;
+	padding: 0;
+	left: 0;
+}
+.unzipRow li {
+	margin: 0;
+	padding: 0 0 0 18px;
+	min-height: 16px;
+	list-style: none;
+	/* ├ */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAACgCAYAAADTnDZxAAAARElEQVR42u3QoQ0AAAgDwe6/NEyAJAjuTeUlTRarXPVZntbbZDKZTCaTyWQymUwmk8lkMplMJpPJZDKZTCaTyWTyM7kB/BBSrsOMEs4AAAAASUVORK5CYII=);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+.unzipRow li.last {
+	/* └ */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAAGUlEQVR42mNgoCH4zzBQYCTbjIseBSMAAADC8Qb6rJ5JAwAAAABJRU5ErkJggg==);
+}
+.unzipRow ul.root > li {
+	background-image: none !important;
+	padding: 0;
+}
+.unzipRow li img {
+	float: left;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+}
+.unzipRow li.dir img {
+	/* フォルダ */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAABP0lEQVR42mNggIKjBxb8P7SrCowPH1j3n4EYsH/3vP8/300D41/vZ/3/8nLq/907luPXvHXDDLDCL0+b/394WAfG3160/n9zt+b/psVZWPGy2eX/GbbO9fr/60n1/7fXc/+/v5EHx5/uFP///rASA/950fD/9g7f/wyr+rz+f7ud+//tpRSiMEjt1dk6/xlWdrr+/3oj5f+bszH/38JxLJAPwSA+TA5Ef7qSDNG4osXx/5dLMf9fHw8B4zcnIBjGh4nB2J/OR0I0Lm+0+f/pdOD/Vwe9icIgtVcmK/9nWFJl/v/zMY//L3c74cAuKPz3h90RGj/ut/v/fLPl/xdbgHizOYK9xRzMh7AtweLvdtv8v9Yv859hcZbc/297Tf+/3Wzw/90WwhikFqyxp6H4/7zWzP8zW4jDILXTGtL+AwDReLcs6dQ7BgAAAABJRU5ErkJggg==);
+}
+.unzipRow li.file img {
+	/* ファイル */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVQ4ja2SsQ2DMBREz1ZETUVNR5sV0noyROVpPmVWyAJUDOB00JhLE1uYAgzJq/xl3fPXyYok+r4njnkDeBhjXgBAfiMkISLcQ0Q4DANFxInIPeRIQme8DACo6xpN05QAnkECIE/gnIPWOpGEu1uOYBxHtG0b56qqyjjkdLCl6zqe7mCN9z6eLwnW/CxISoyfYwel1HXBNvz/DZZlOQxrndZ2eoMtiaAoimuCaZpgrcU8z6cFH463oU6M2P/DAAAAAElFTkSuQmCC);
+}
+
