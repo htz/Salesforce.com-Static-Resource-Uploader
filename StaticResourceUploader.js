@@ -557,7 +557,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					$('#' + id + '.unzipRow').ready(function () {
 						$(this).find('ul > li:last-child').addClass('last');
 						$(this).find('.dirtoggle').click(function () {
-							$(this).next('ul:first').toggle();
+							$(this).parent().next('ul:first').toggle();
 						});
 					});
 				});
