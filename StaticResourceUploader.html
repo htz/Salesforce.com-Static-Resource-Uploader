@@ -126,19 +126,35 @@
 	</tr>
 </script>
 <script id="unzip_dir" type="text/x-jquery-tmpl">
-	<ul class="{{if files['$dir']}}{{else}}root{{/if}}" style="{{if files['$dir']}}display: none;{{/if}}">
+	<ul class="ziptree {{if files['$dir']}}{{else}}root{{/if}}" style="{{if files['$dir']}}display: none;{{/if}}">
 		{{each files}}
 		{{if $index != '$dir'}}
 			{{if $value['$dir']}}
 			<li class="dir">
-				<img src="/s.gif" />
-				<a class="dirtoggle" href="javascript:void(0);">${$index}</a>
+				<div class="name">
+					<img class="icon" src="/s.gif" />
+					<a class="dirtoggle" href="javascript:void(0);">${$index}</a>
+				</div>
+				<div class="image">&nbsp;</div>
+				<div class="size">-</div>
+				<div class="clear">&nbsp;</div>
 				{{tmpl({files: $value, base_url: base_url}) "#unzip_dir"}}
 			</li>
 			{{else}}
 			<li class="file">
-				<img src="/s.gif" />
-				<a href="${base_url}/${$value.name}" target="_blank">${$index}</a>
+				<div class="name">
+					<img class="icon" src="/s.gif" />
+					<a href="${base_url}/${$value.name}" target="_blank">${$index}</a>
+				</div>
+				<div class="image">
+				{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
+					<img class="thumbnail" src="${base_url}/${$value.name}" />
+				{{/if}}
+				</div>
+				<div class="size">
+					${$.commaStyle($value.fileSize)}
+				</div>
+				<div class="clear">&nbsp;</div>
 			</li>
 			{{/if}}
 		{{/if}}
@@ -249,7 +265,7 @@
 			<table id="staticresourcelist" class="list">
 				<thead>
 					<tr class="headerRow">
-						<th scope="col" style="width: 21px;"><input id="selectall" type="checkbox" /></th>
+						<th scope="col" style="width: 24px;"><input id="selectall" type="checkbox" /></th>
 						<th scope="col" class="actionColumn">Action</th>
 						<th scope="col" id="Name" class="order sortAsc" style="width: 130px;">Name</th>
 						<th scope="col" id="NamespacePrefix" class="order" style="width: 210px;">Namespace Prefix</th>
