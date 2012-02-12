@@ -568,15 +568,15 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					loadImageSize('#' + id + '.unzipRow .image img')
 					$(document).ready(function () {
 						var row = $('#' + id + '.unzipRow');
-						row.find('ul > li:last-child').addClass('last');
+						row.find('ul.ziptree > li:last-child').addClass('last');
 						row.find('.unzipActionLinks .expandall').click(function () {
-							row.find('ul').show();
+							row.find('ul.ziptree.root').find('ul.ziptree').show();
 						});
 						row.find('.unzipActionLinks .collaseall').click(function () {
-							row.find('ul').hide();
+							row.find('ul.ziptree.root').find('ul.ziptree').hide();
 						});
 						row.find('.dirtoggle').click(function () {
-							$(this).parent().nextAll('ul:first').toggle();
+							$(this).parent().nextAll('ul.ziptree:first').toggle();
 						});
 						var tdwidth = $('#edittab #staticresourcelist tbody tr:first-child td').map(function () {
 							var w = {
