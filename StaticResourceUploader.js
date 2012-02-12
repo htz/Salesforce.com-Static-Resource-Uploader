@@ -578,6 +578,9 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						row.find('.dirtoggle').click(function () {
 							$(this).parent().nextAll('ul.ziptree:first').toggle();
 						});
+						row.find('ul.ziptree li')
+							.bind('blur mouseout', function () {$(this).removeClass('highlight')})
+							.bind('focus mouseover', function () {$(this).addClass('highlight')});
 						var tdwidth = $('#edittab #staticresourcelist tbody tr:first-child td').map(function () {
 							var w = {
 								width: $(this).width() + parseInt($(this).css('padding-left')) + parseInt($(this).css('padding-right')),
