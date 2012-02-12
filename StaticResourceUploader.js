@@ -561,9 +561,9 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						files: splitDirectory(zip.files),
 						base_url: base_url
 					}));
-					loadImageSize('#' + id + '.unzipRow .image img', function () {
+					loadImageSize('#' + id + '.unzipRow .image img', function (ow, oh, w, h) {
 						var divs = $(this).parent().siblings('div');
-						h = Math.max.apply(null, divs.map(function () {return $(this).height();}));
+						h = Math.max.apply(null, divs.map(function () {return $(this).height();}).push(h));
 						$(this).parent().siblings('div').height(h);
 					});
 					$(document).ready(function () {
