@@ -569,6 +569,12 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					$(document).ready(function () {
 						var row = $('#' + id + '.unzipRow');
 						row.find('ul > li:last-child').addClass('last');
+						row.find('.unzipActionLinks .expandall').click(function () {
+							row.find('ul').show();
+						});
+						row.find('.unzipActionLinks .collaseall').click(function () {
+							row.find('ul').hide();
+						});
 						row.find('.dirtoggle').click(function () {
 							$(this).parent().nextAll('ul:first').toggle();
 						});
