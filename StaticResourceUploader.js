@@ -581,8 +581,10 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						row.find('ul.ziptree li')
 							.bind('blur mouseout', function () {$(this).removeClass('highlight');})
 							.bind('focus mouseover', function () {
-								$(this).addClass('highlight');
-								$(this).parents('li.highlight').removeClass('highlight');
+								if ($(this).find('li.highlight').length == 0) {
+										$(this).addClass('highlight');
+										$(this).parents('li.highlight').removeClass('highlight');
+								}
 							});
 						var tdwidth = $('#edittab #staticresourcelist tbody tr:first-child td').map(function () {
 							var w = {
