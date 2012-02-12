@@ -561,8 +561,9 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						files: splitDirectory(zip.files),
 						base_url: base_url
 					}));
-					loadImageSize('#' + id + '.unzipRow .image img', function (ow, oh, w, h) {
-						if (h < 16) h = 16;
+					loadImageSize('#' + id + '.unzipRow .image img', function () {
+						var divs = $(this).parent().siblings('div');
+						h = Math.max.apply(null, divs.max(function () {return $(this).height();}));
 						$(this).parent().siblings('div').height(h);
 					});
 					$(document).ready(function () {
