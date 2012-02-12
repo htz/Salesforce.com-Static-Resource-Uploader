@@ -227,22 +227,18 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 		return str.replace(/([\%\_\'])/g, "\\$1");
 	}
 
-	function loadImageSize(expr) {
+	function loadImageSize(expr, callback) {
 		$(expr).bind('load', function () {
 			$(this).imageSize(function (w, h) {
-				var size = '<br />(' + w + ', ' + h + ')';
-				if (w >= h) {
-					$(this).css({
-						width: 40,
-						height: Math.floor(Math.floor(h * 40 / w) / 2) * 2
-					});
-				} else {
-					$(this).css({
-						width: Math.floor(Math.floor(w * 40 / h) / 2) * 2,
-						height: 40
-					});
-				}
+				var size = '<br />(' + w + ', ' + h + ')', width = 40, height = 40;
+				if (w >= h) height = Math.floor(Math.floor(h * 40 / w) / 2) * 2;
+				else width = Math.floor(Math.floor(w * 40 / h) / 2) * 2;
+				$(this).css({
+					width: width,
+					height: height
+				});
 				$(this).parent().siblings('.size').append(size);
+				if (callbakc) callback.call(this, w, h, width, height);
 			});
 		});
 	}
@@ -565,7 +561,10 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						files: splitDirectory(zip.files),
 						base_url: base_url
 					}));
-					loadImageSize('#' + id + '.unzipRow .image img')
+					loadImageSize('#' + id + '.unzipRow .image img', function (ow, oh, w, h) {
+						if (h < 16) h = 16;
+						$(this).parent().siblings('div').height(h);
+					});
 					$(document).ready(function () {
 						var row = $('#' + id + '.unzipRow');
 						row.find('ul.ziptree > li:last-child').addClass('last');
