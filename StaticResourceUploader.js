@@ -122,8 +122,8 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 		$(selector + ' tbody tr.dataRow:first').addClass('first');
 		$(selector + ' tbody tr.dataRow:last').addClass('last');
 		$(selector + ' tbody tr.dataRow')
-			.bind('blur mouseout', function () {$(this).removeClass('highlight')})
-			.bind('focus mouseover', function () {$(this).addClass('highlight')});
+			.bind('blur mouseout', function () {$(this).removeClass('highlight');})
+			.bind('focus mouseover', function () {$(this).addClass('highlight');});
 	}
 
 	/* Get view state */
@@ -579,8 +579,11 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 							$(this).parent().nextAll('ul.ziptree:first').toggle();
 						});
 						row.find('ul.ziptree li')
-							.bind('blur mouseout', function () {$(this).removeClass('highlight')})
-							.bind('focus mouseover', function () {$(this).addClass('highlight')});
+							.bind('blur mouseout', function () {$(this).removeClass('highlight');})
+							.bind('focus mouseover', function () {
+								$(this).addClass('highlight');
+								$(this).parents('li.highlight').removeClass('highlight');
+							});
 						var tdwidth = $('#edittab #staticresourcelist tbody tr:first-child td').map(function () {
 							var w = {
 								width: $(this).width() + parseInt($(this).css('padding-left')) + parseInt($(this).css('padding-right')),
