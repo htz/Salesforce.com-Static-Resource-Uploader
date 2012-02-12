@@ -88,38 +88,6 @@
               :background-position 0 -32px
         &.noorder
           :cursor not-allowed
-  #previewWindow
-    :position absolute
-    :background-color white
-    :z-index 101
-    :margin 0
-    :display block
-    :visibility visible
-    @include border-radius(6px, 6px, 6px, 6px)
-    :min
-      :width 100px
-      :height 100px
-    .topRight
-      :cursor move
-    .middle
-      :padding 5px 5px 0 5px
-      pre
-        :border none
-        :margin 0
-        :padding 0
-        :max
-          :width 1000px
-          :height 800px
-          :overflow scroll
-    .bottomRight
-      :cursor n-resize
-    .resize
-      :position absolute
-      :bottom 0
-      :right 0
-      :width 22px
-      :height 22px
-      :cursor se-resize
   table.list
     :border-collapse collapse
     :border-spacing 0
@@ -191,20 +159,54 @@
       :padding 5px
       :background #F2F2F2 url('/img/alohaSkin/listFooter.png') repeat-x
 
-  .overlay
+#previewWindow
+  :position absolute
+  :background-color white
+  :z-index 101
+  :margin 0
+  :display block
+  :visibility visible
+  @include border-radius(6px, 6px, 6px, 6px)
+  :min
+    :width 100px
+    :height 100px
+  .topRight
+    :cursor move
+  .middle
+    :padding 5px 5px 0 5px
+    pre
+      :border none
+      :margin 0
+      :padding 0
+      :max
+        :width 1000px
+        :height 800px
+      :overflow scroll
+      li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8
+        :list-style-type decimal
+  .bottomRight
+    :cursor n-resize
+  .resize
     :position absolute
-    :top 0
-    :left 0
-    :width 2000px
-    :height 2000px
-    :background-color #222
-    :opacity 0.6
-    :z-index 100
-  .thumbnail
-    :max
-      :height 40px
-      :width 40px
-  .red
-    :color red
-    :font-weight bold
+    :bottom 0
+    :right 0
+    :width 22px
+    :height 22px
+    :cursor se-resize
+.overlay
+  :position absolute
+  :top 0
+  :left 0
+  :width 2000px
+  :height 2000px
+  :background-color #222
+  :opacity 0.6
+  :z-index 100
+.thumbnail
+  :max
+    :height 40px
+    :width 40px
+.red
+  :color red
+  :font-weight bold
 
