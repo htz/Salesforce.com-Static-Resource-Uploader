@@ -563,7 +563,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					}));
 					loadImageSize('#' + id + '.unzipRow .image img', function () {
 						var divs = $(this).parent().siblings('div');
-						h = Math.max.apply(null, divs.max(function () {return $(this).height();}));
+						h = Math.max.apply(null, divs.map(function () {return $(this).height();}));
 						$(this).parent().siblings('div').height(h);
 					});
 					$(document).ready(function () {
