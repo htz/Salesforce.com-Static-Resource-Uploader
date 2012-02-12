@@ -231,8 +231,8 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 		$(expr).bind('load', function () {
 			$(this).imageSize(function (w, h) {
 				var size = '<br />(' + w + ', ' + h + ')', width = 40, height = 40;
-				if (w >= h) height = Math.floor(Math.floor(h * 40 / w) / 2) * 2;
-				else width = Math.floor(Math.floor(w * 40 / h) / 2) * 2;
+				if (w >= h) height = Math.floor(h * 40 / w);
+				else width = Math.floor(w * 40 / h);
 				$(this).css({
 					width: width,
 					height: height
@@ -564,6 +564,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					loadImageSize('#' + id + '.unzipRow .image img', function (ow, oh, w, h) {
 						var divs = $(this).parent().siblings('div');
 						h = Math.max(28, h, Math.max.apply(null, divs.map(function () {return $(this).height();})));
+						h = Math.floor(h / 2) * 2;
 						$(this).parent().height(h);
 						$(this).parent().siblings('div').height(h);
 					});
