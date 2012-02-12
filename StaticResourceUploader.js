@@ -238,7 +238,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					height: height
 				});
 				$(this).parent().siblings('.size').append(size);
-				if (callbakc) callback.call(this, w, h, width, height);
+				if (callback) callback.call(this, w, h, width, height);
 			});
 		});
 	}
