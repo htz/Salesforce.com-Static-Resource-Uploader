@@ -13,12 +13,12 @@
 			<input class="dosave" type="button" value="Save" /><br />
 			<input class="cancel" type="button" value="Cancel" />
 		</td>
-		<td class="dataCell">${$.escapeHTML(file.name)}</td>
+		<td class="dataCell">{{html file.name}}</td>
 		<td class="dataCell">
 			<input class="developerName" type="text" value="${file.name.replace(/\W+/g, '_')}" />
 		</td>
 		<td class="dataCell"><textarea class="description"></textarea></td>
-		<td class="dataCell">${$.escapeHTML(file.type)}</td>
+		<td class="dataCell">{{html file.type}}</td>
 		<td class="dataCell image">
 		{{if image}}
 			<img id="img_${id}" class="thumbnail" src="${image}" />
@@ -53,9 +53,9 @@
 		<td class="dataCell">
 			<a href="/resource/1311880464000/${object.Name}" target="_blank">${object.Name}</a>
 		</td>
-		<td class="dataCell">${$.escapeHTML(object.NamespacePrefix)}</td>
+		<td class="dataCell">{{html object.NamespacePrefix}}</td>
 		<td class="dataCell">${$.escapeHTML(object.Description).replace(/[\r?\n]/g, '<br />')}</td>
-		<td class="dataCell">${$.escapeHTML(object.ContentType)}</td>
+		<td class="dataCell">{{html object.ContentType}}</td>
 		<td class="dataCell image">
 		{{if object.ContentType.match(/image\/.*/)}}
 			<image id="img_${object.Id}" class="thumbnail" src="/resource/1311880464000/${object.Name}?_=${_}" />
