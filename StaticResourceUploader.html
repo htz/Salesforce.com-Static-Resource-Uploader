@@ -139,10 +139,10 @@
 						<img class="icon" src="/s.gif" />
 						<a class="dirtoggle" href="javascript:void(0);">${$index}</a>
 					</div>
+					<div class="image">&nbsp;</div>
+					<div class="size">-</div>
+					<div class="clear">&nbsp;</div>
 				</div>
-				<div class="image">&nbsp;</div>
-				<div class="size">-</div>
-				<div class="clear">&nbsp;</div>
 				{{tmpl({files: $value, base_url: base_url}) "#unzip_dir"}}
 			</li>
 			{{else}}
@@ -152,16 +152,16 @@
 						<img class="icon" src="/s.gif" />
 						<a href="${base_url}/${$value.name}" target="_blank">${$index}</a>
 					</div>
+					<div class="image">
+					{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
+						<img class="thumbnail" src="${base_url}/${$value.name}" />
+					{{/if}}
+					</div>
+					<div class="size">
+						${$.commaStyle($value.fileSize)}
+					</div>
+					<div class="clear">&nbsp;</div>
 				</div>
-				<div class="image">
-				{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
-					<img class="thumbnail" src="${base_url}/${$value.name}" />
-				{{/if}}
-				</div>
-				<div class="size">
-					${$.commaStyle($value.fileSize)}
-				</div>
-				<div class="clear">&nbsp;</div>
 			</li>
 			{{/if}}
 		{{/if}}
