@@ -539,7 +539,6 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						url: '/resource/1311880464000/' + object.Name,
 						success: function(body) {
 							showPreview(object.Name, $('#preview_text').tmpl({
-								id: id,
 								linenumber: linenumber,
 								text: $.escapeHTML(body)
 							}).html());
@@ -561,7 +560,6 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						url: url,
 						success: function(body) {
 							showPreview(fname, $('#preview_text').tmpl({
-								id: null,
 								linenumber: linenumber,
 								text: $.escapeHTML(body)
 							}).html());
@@ -665,7 +663,8 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					prettyPrint();
 					win.find('input#linenumber').change(function () {
 						var pre = $('#previewWindow .middle pre');
-						previewRow(pre.attr('id'), this.checked);
+						if (this.checked) pre.find('li').css({'list-style-type': 'decimal'});
+						else pre.find('li').css({'list-style-type': 'none'});
 					});
 					$('#previewWindow .topRight').bindDrag({
 						move: function (e) {
