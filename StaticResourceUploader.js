@@ -664,7 +664,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					win.find('input#linenumber').change(function () {
 						var pre = $('#previewWindow .middle pre');
 						if (this.checked) pre.find('li').css({'list-style-type': 'decimal'});
-						else pre.find('li').css({'list-style-type': 'none'});
+						else pre.find('li').css({'list-style-type': 'none', 'padding-left': 0});
 					});
 					$('#previewWindow .topRight').bindDrag({
 						move: function (e) {
