@@ -531,7 +531,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 				var object = static_resources[id];
 				if (object.ContentType.match(/image/)) {
 					showPreview(object.Name, $('#preview_image').tmpl({
-						object: object,
+						url: '/resource/1311880464000/' + object.Name,
 						_: new Date().getTime()
 					}).html());
 				} else {
@@ -549,8 +549,25 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 			}
 
 			/* preview unzip file */
-			function previewUnzip(fname, linenumber) {
-				alert('preview unzip file');
+			function previewUnzip(url, linenumber) {
+				var fname = url.split('/').pop();
+				if (fname.ContentType.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)) {
+					showPreview(fname, $('#preview_image').tmpl({
+						url: url,
+						_: new Date().getTime()
+					}).html());
+				} else {
+					getStaticResourceBody({
+						url: url,
+						success: function(body) {
+							showPreview(fname, $('#preview_text').tmpl({
+								id: null,
+								linenumber: linenumber,
+								text: $.escapeHTML(body)
+							}).html());
+						}
+					});
+				}
 			}
 
 			/* unzip row */
@@ -776,8 +793,8 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 				unzipRow(id, true);
 			});
 			$('#edittab #staticresourcelist .unzippreview').live('click', function () {
-				var fname = $(this).parent().siblings('.filename').attr('href');
-				previewUnzip(fname, true);
+				var url = $(this).parent().siblings('.filename').attr('href');
+				previewUnzip(url, true);
 			});
 			$('#edittab #staticresourcelist .closeunzip').live('click', function () {
 				var id = $(this).parent().parent().attr('id');
