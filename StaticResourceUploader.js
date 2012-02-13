@@ -561,6 +561,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						files: splitDirectory(zip.files),
 						base_url: base_url
 					}));
+					loadImageSize('#' + id + '.unzipRow .image img');
 					$(document).ready(function () {
 						var row = $('#' + id + '.unzipRow');
 						row.find('ul.ziptree > li:last-child').addClass('last');
