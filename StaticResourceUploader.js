@@ -551,7 +551,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 			/* preview unzip file */
 			function previewUnzip(url, linenumber) {
 				var fname = url.split('/').pop();
-				if (fname.ContentType.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)) {
+				if (fname.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)) {
 					showPreview(fname, $('#preview_image').tmpl({
 						url: url,
 						_: new Date().getTime()
