@@ -550,6 +550,11 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 				}
 			}
 
+			/* preview unzip file */
+			function previewUnzip(fname, linenumber) {
+				alert('preview unzip file');
+			}
+
 			/* unzip row */
 			function unzipRow(id) {
 				var object = static_resources[id];
@@ -771,6 +776,10 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 				var id = $(this).parent().parent().attr('id');
 				$(this).hide();
 				unzipRow(id, true);
+			});
+			$('#edittab #staticresourcelist .unzippreview').live('click', function () {
+				var fname = $(this).parent().siblings('.filename').attr('href');
+				previewUnzip(fname, true);
 			});
 			$('#edittab #staticresourcelist .closeunzip').live('click', function () {
 				var id = $(this).parent().parent().attr('id');

@@ -41,13 +41,13 @@
 		</td>
 		<td class="actionColumn">
 			<a class="actionLink edit" href="javascript:void(0);">Edit</a>
-			 | 
+			&nbsp;|&nbsp;
 			<a class="actionLink delete" href="javascript:void(0);">Del</a>
 			{{if object.ContentType.match(/(image|text|javascript|css|html|xml)/)}}
-				 | <a class="actionLink preview" href="javascript:void(0);">Preview</a>
+				&nbsp;|&nbsp;<a class="actionLink preview" href="javascript:void(0);">Preview</a>
 			{{/if}}
 			{{if object.ContentType.match(/zip/)}}
-				 | <a class="actionLink unzip" href="javascript:void(0);">Unzip</a>
+				&nbsp;|&nbsp;<a class="actionLink unzip" href="javascript:void(0);">Unzip</a>
 			{{/if}}
 		</td>
 		<td class="dataCell">
@@ -137,7 +137,7 @@
 				<div class="tr">
 					<div class="name">
 						<img class="icon" src="/s.gif" />
-						<a class="dirtoggle" href="javascript:void(0);">${$index}</a>
+						<a class="filename dirtoggle" href="javascript:void(0);">${$index}</a>
 					</div>
 					<div class="image">&nbsp;</div>
 					<div class="size">-</div>
@@ -150,12 +150,17 @@
 				<div class="tr">
 					<div class="name">
 						<img class="icon" src="/s.gif" />
-						<a href="${base_url}/${$value.name}" target="_blank">${$index}</a>
+						<a class="filename" href="${base_url}/${$value.name}" target="_blank">${$index}</a>
+						<div class="actionLinks">
+							{{if $value.name.match(/\.(?:txt|js|html|css|xml|bmp|jpg|jpeg|png|gif)$/)}}
+							[<a class="actionLink unzippreview" href="javascript:void(0);">Preview</a>]
+							{{/if}}
+						</div>
 					</div>
 					<div class="image">
-					{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
+						{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
 						<img class="thumbnail" src="${base_url}/${$value.name}" />
-					{{/if}}
+						{{/if}}
 					</div>
 					<div class="size">
 						${$.commaStyle($value.fileSize)}
