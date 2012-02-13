@@ -663,8 +663,8 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					prettyPrint();
 					win.find('input#linenumber').change(function () {
 						var pre = $('#previewWindow .middle pre');
-						if (this.checked) pre.find('li').attr('style', '');
-						else pre.find('li').css({'list-style-type': 'none', 'padding-left': 0});
+						if (this.checked) pre.find('ol').attr('style', '').find('li').attr('style', '');
+						else pre.find('ol').css({'padding-left': 0}).find('li').css({'list-style-type': 'none', 'margin-left': 0});
 					});
 					$('#previewWindow .topRight').bindDrag({
 						move: function (e) {
