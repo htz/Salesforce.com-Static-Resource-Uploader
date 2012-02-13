@@ -541,7 +541,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 							showPreview(object.Name, $('#preview_text').tmpl({
 								id: id,
 								linenumber: linenumber,
-								text: $.escapeHTML($.base64.decode(body))
+								text: $.eescapeHTML(body)
 							}).html());
 						}
 					});
