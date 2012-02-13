@@ -197,19 +197,17 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 
 	/* Get Static Resource */
 	function getStaticResourceBody(option) {
-		var soql = 'Select Body From StaticResource Where Id=\'' + option.id + '\'';
-		sforce.connection.query(
-			soql,
-			{
-				onSuccess: function (res, source) {
-					if (res.size == 1) option.success(res.records.Body);
-					else alert('No found this static resource.');
-				},
-				onFailure: function () {
-					alert('Application error!');
-				}
+		$.ajax({
+			type: 'GET',
+			url: option.url,
+			dataType: 'text',
+			success: function (data) {
+				option.success(data);
+			},
+			error: function (req, status, error) {
+				alert('Application error!');
 			}
-		);
+		});
 	}
 
 	/* Get Static Resource Prefix */
@@ -538,7 +536,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					}).html());
 				} else {
 					getStaticResourceBody({
-						id: object.Id,
+						url: '/resource/1311880464000/' + object.Name,
 						success: function(body) {
 							showPreview(object.Name, $('#preview_text').tmpl({
 								id: id,
