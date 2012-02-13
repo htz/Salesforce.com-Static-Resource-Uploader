@@ -133,30 +133,34 @@
 		{{if $index != '$dir'}}
 			{{if $value['$dir']}}
 			<li class="dir">
-				<div class="name">
-					<img class="icon" src="/s.gif" />
-					<a class="dirtoggle" href="javascript:void(0);">${$index}</a>
+				<div class="tr">
+					<div class="name">
+						<img class="icon" src="/s.gif" />
+						<a class="dirtoggle" href="javascript:void(0);">${$index}</a>
+					</div>
+					<div class="image">&nbsp;</div>
+					<div class="size">-</div>
+					<div class="clear">&nbsp;</div>
 				</div>
-				<div class="image">&nbsp;</div>
-				<div class="size">-</div>
-				<div class="clear">&nbsp;</div>
 				{{tmpl({files: $value, base_url: base_url}) "#unzip_dir"}}
 			</li>
 			{{else}}
 			<li class="file">
-				<div class="name">
-					<img class="icon" src="/s.gif" />
-					<a href="${base_url}/${$value.name}" target="_blank">${$index}</a>
+				<div class="tr">
+					<div class="name">
+						<img class="icon" src="/s.gif" />
+						<a href="${base_url}/${$value.name}" target="_blank">${$index}</a>
+					</div>
+					<div class="image">
+					{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
+						<img class="thumbnail" src="${base_url}/${$value.name}" />
+					{{/if}}
+					</div>
+					<div class="size">
+						${$.commaStyle($value.fileSize)}
+					</div>
+					<div class="clear">&nbsp;</div>
 				</div>
-				<div class="image">
-				{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
-					<img class="thumbnail" src="${base_url}/${$value.name}" />
-				{{/if}}
-				</div>
-				<div class="size">
-					${$.commaStyle($value.fileSize)}
-				</div>
-				<div class="clear">&nbsp;</div>
 			</li>
 			{{/if}}
 		{{/if}}
@@ -212,19 +216,19 @@
 #StaticResourceUploader table.list tbody tr.dataRow.unzipRow .unzipActionLinks{margin-bottom:4px}
 #StaticResourceUploader table.list tbody tr.dataRow.unzipRow .unzipActionLinks a{margin:0 4px;text-decoration:none;color:#015ba7}
 #StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul{position:relative;left:-18px;margin:0;padding:0 0 0 16px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAAF0lEQVR42mNgoCH4zzBQYNTmUZtHpM0ANmIH+ddU/ZcAAAAASUVORK5CYII=);background-repeat:repeat-y;background-position:0 0}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul.root,#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul.root>li.dir>ul{background-image:none;padding:0;left:0}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul.root>li{background-image:none !important;padding:0}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul.root,#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul.root > li.dir > ul{background-image:none;padding:0;left:0}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul.root > li{background-image:none !important;padding:0}
 #StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li{margin:0;padding:0 0 0 18px;min-height:16px;list-style:none;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAACgCAYAAADTnDZxAAAARElEQVR42u3QoQ0AAAgDwe6/NEyAJAjuTeUlTRarXPVZntbbZDKZTCaTyWQymUwmk8lkMplMJpPJZDKZTCaTyWTyM7kB/BBSrsOMEs4AAAAASUVORK5CYII=);background-repeat:no-repeat;background-position:0 0}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li.highlight>div{background:#e3f3ff !important}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li.highlight > .tr{background:#e3f3ff !important}
 #StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li.last{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAAGUlEQVR42mNgoCH4zzBQYCTbjIseBSMAAADC8Qb6rJ5JAwAAAABJRU5ErkJggg==)}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li.last>ul{background-image:none}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li .name a{float:left}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li .name .icon{float:left;width:16px;height:16px;background-repeat:no-repeat}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li.dir .name .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAABP0lEQVR42mNggIKjBxb8P7SrCowPH1j3n4EYsH/3vP8/300D41/vZ/3/8nLq/907luPXvHXDDLDCL0+b/394WAfG3160/n9zt+b/psVZWPGy2eX/GbbO9fr/60n1/7fXc/+/v5EHx5/uFP///rASA/950fD/9g7f/wyr+rz+f7ud+//tpRSiMEjt1dk6/xlWdrr+/3oj5f+bszH/38JxLJAPwSA+TA5Ef7qSDNG4osXx/5dLMf9fHw8B4zcnIBjGh4nB2J/OR0I0Lm+0+f/pdOD/Vwe9icIgtVcmK/9nWFJl/v/zMY//L3c74cAuKPz3h90RGj/ut/v/fLPl/xdbgHizOYK9xRzMh7AtweLvdtv8v9Yv859hcZbc/297Tf+/3Wzw/90WwhikFqyxp6H4/7zWzP8zW4jDILXTGtL+AwDReLcs6dQ7BgAAAABJRU5ErkJggg==)}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li.file .name .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVQ4ja2SsQ2DMBREz1ZETUVNR5sV0noyROVpPmVWyAJUDOB00JhLE1uYAgzJq/xl3fPXyYok+r4njnkDeBhjXgBAfiMkISLcQ0Q4DANFxInIPeRIQme8DACo6xpN05QAnkECIE/gnIPWOpGEu1uOYBxHtG0b56qqyjjkdLCl6zqe7mCN9z6eLwnW/CxISoyfYwel1HXBNvz/DZZlOQxrndZ2eoMtiaAoimuCaZpgrcU8z6cFH463oU6M2P/DAAAAAElFTkSuQmCC)}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li>div{float:left;min-height:16px}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li>div.size{text-align:right}
-#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li>div.clear{float:none !important;clear:both !important;height:0 !important;min-height:0 !important}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li.last > ul{background-image:none}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li > .tr > div{float:left;min-height:16px}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li > .tr > div.name .icon{float:left;width:16px;height:16px;background-repeat:no-repeat}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li > .tr > div.name a{float:left}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li > .tr > div.size{text-align:right}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li > .tr > div.clear{float:none !important;clear:both !important;height:0 !important;min-height:0 !important}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li.dir > .tr > .name .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAABP0lEQVR42mNggIKjBxb8P7SrCowPH1j3n4EYsH/3vP8/300D41/vZ/3/8nLq/907luPXvHXDDLDCL0+b/394WAfG3160/n9zt+b/psVZWPGy2eX/GbbO9fr/60n1/7fXc/+/v5EHx5/uFP///rASA/950fD/9g7f/wyr+rz+f7ud+//tpRSiMEjt1dk6/xlWdrr+/3oj5f+bszH/38JxLJAPwSA+TA5Ef7qSDNG4osXx/5dLMf9fHw8B4zcnIBjGh4nB2J/OR0I0Lm+0+f/pdOD/Vwe9icIgtVcmK/9nWFJl/v/zMY//L3c74cAuKPz3h90RGj/ut/v/fLPl/xdbgHizOYK9xRzMh7AtweLvdtv8v9Yv859hcZbc/297Tf+/3Wzw/90WwhikFqyxp6H4/7zWzP8zW4jDILXTGtL+AwDReLcs6dQ7BgAAAABJRU5ErkJggg==)}
+#StaticResourceUploader table.list tbody tr.dataRow.unzipRow ul li.file > .tr > .name .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAt0lEQVQ4ja2SsQ2DMBREz1ZETUVNR5sV0noyROVpPmVWyAJUDOB00JhLE1uYAgzJq/xl3fPXyYok+r4njnkDeBhjXgBAfiMkISLcQ0Q4DANFxInIPeRIQme8DACo6xpN05QAnkECIE/gnIPWOpGEu1uOYBxHtG0b56qqyjjkdLCl6zqe7mCN9z6eLwnW/CxISoyfYwel1HXBNvz/DZZlOQxrndZ2eoMtiaAoimuCaZpgrcU8z6cFH463oU6M2P/DAAAAAElFTkSuQmCC)}
 #StaticResourceUploader table.list tfoot tr td{padding:5px;background:#f2f2f2 url("/img/alohaSkin/listFooter.png") repeat-x}
 #previewWindow{position:absolute;background-color:#fff;z-index:101;margin:0;display:block;visibility:visible;-webkit-border-radius:6px 6px 6px 6px;-moz-border-radius:6px 6px 6px 6px;-o-border-radius:6px 6px 6px 6px;-ms-border-radius:6px 6px 6px 6px;-khtml-border-radius:6px 6px 6px 6px;border-radius:6px 6px 6px 6px;min-width:100px;min-height:100px}
 #previewWindow .topRight{cursor:move}
@@ -236,7 +240,6 @@
 .overlay{position:absolute;top:0;left:0;width:2000px;height:2000px;background-color:#222;opacity:0.6;z-index:100}
 .thumbnail{max-height:40px;max-width:40px}
 .red{color:red;font-weight:bold}
-
 </style>
 <div id="StaticResourceUploader" class="bRelatedList" style="display: none;">
 	<div id="uploadtab">
