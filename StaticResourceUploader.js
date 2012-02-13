@@ -571,9 +571,9 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 			/* unzip row */
 			function unzipRow(id) {
 				var object = static_resources[id];
-				var base_url = '/resource/1311880464000/' + object.Name + '?_=' + new Date().getTime();
+				var base_url = '/resource/1311880464000/' + object.Name;
 
-				Zip.inflate_file(base_url, function (zip) {
+				Zip.inflate_file(base_url + '?_=' + new Date().getTime(), function (zip) {
 					$('#' + id).after($('#unzip').tmpl({
 						id: id,
 						files: splitDirectory(zip.files),
