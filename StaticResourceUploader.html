@@ -134,9 +134,11 @@
 		{{if $index != '$dir'}}
 			{{if $value['$dir']}}
 			<li class="dir">
-				<div class="name">
-					<img class="icon" src="/s.gif" />
-					<a class="dirtoggle" href="javascript:void(0);">${$index}</a>
+				<div class="tr">
+					<div class="name">
+						<img class="icon" src="/s.gif" />
+						<a class="dirtoggle" href="javascript:void(0);">${$index}</a>
+					</div>
 				</div>
 				<div class="image">&nbsp;</div>
 				<div class="size">-</div>
@@ -145,9 +147,11 @@
 			</li>
 			{{else}}
 			<li class="file">
-				<div class="name">
-					<img class="icon" src="/s.gif" />
-					<a href="${base_url}/${$value.name}" target="_blank">${$index}</a>
+				<div class="tr">
+					<div class="name">
+						<img class="icon" src="/s.gif" />
+						<a href="${base_url}/${$value.name}" target="_blank">${$index}</a>
+					</div>
 				</div>
 				<div class="image">
 				{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
