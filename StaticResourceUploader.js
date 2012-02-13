@@ -572,7 +572,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 							row.find('ul.ziptree.root').find('ul.ziptree').hide();
 						});
 						row.find('.dirtoggle').click(function () {
-							$(this).parent().nextAll('ul.ziptree:first').toggle();
+							$(this).parent().parent().nextAll('ul.ziptree:first').toggle();
 						});
 						row.find('ul.ziptree li')
 							.bind('blur mouseout', function () {$(this).removeClass('highlight');})
