@@ -273,7 +273,7 @@ require({src: '/soap/ajax/23.0/connection.js'});
 			function addRow(id, file, image) {
 				file_map[id] = file;
 				/* append table row */
-				$('#newtab #uploadlist tbody').append($('#taticresource_new').tmpl({
+				$('#newtab #uploadlist tbody').append($('#staticresource_new').tmpl({
 					id: id,
 					file: file,
 					image: image
