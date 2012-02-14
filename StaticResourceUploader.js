@@ -12,7 +12,6 @@ function require(option) {
 }
 css({href: 'http://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
 css({href: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css'});
-require({src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'});
 require({src: 'https://raw.github.com/jquery/jquery-tmpl/master/jquery.tmpl.js'});
 require({src: 'https://github.com/yatt/jquery.base64/raw/master/jquery.base64.js'});
 require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.binddrag.js'});
