@@ -861,6 +861,9 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 			}).bind('mouseleave', function () {
 				$(this).removeClass('over');
 			});
+			$(window).bind('resize', function () {
+				resizeUnzipTree($('.unzipRow'));
+			});
 
 			/* initialize */
 			refreshStaticResourceTable();
