@@ -584,6 +584,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					};
 					return w;
 				});
+				if (tdwidth.length == 0) return;
 				target.find('.name').each(function () {
 					$(this).css({
 						width: tdwidth[2].width + tdwidth[3].width + tdwidth[4].width + tdwidth[5].width
