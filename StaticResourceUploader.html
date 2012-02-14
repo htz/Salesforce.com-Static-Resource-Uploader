@@ -81,18 +81,18 @@
 			<textarea class="description">${description}</textarea>
 		</td>
 		<td class="dataCell type">
-			{{if file}}
-				<span class="red">${file.type}</span><br /><span class="red">(${file.name})</span>
-			{{else}}
-				${object.ContentType}
-			{{/if}}
+		{{if file}}
+			<span class="red">${file.type}</span><br /><span class="red">(${file.name})</span>
+		{{else}}
+			${object.ContentType}
+		{{/if}}
 		</td>
 		<td class="dataCell image">
-			{{if image}}
-				<img id="img_${object.Id}" class="thumbnail" src="${image}" />
-			{{else object.ContentType.match(/image\/.*/)}}
-				<image id="img_${object.Id}" class="thumbnail" src="/resource/1311880464000/${object.Name}?_=${_}" />
-			{{/if}}
+		{{if image}}
+			<img id="img_${object.Id}" class="thumbnail" src="${image}" />
+		{{else object.ContentType.match(/image\/.*/)}}
+			<image id="img_${object.Id}" class="thumbnail" src="/resource/1311880464000/${object.Name}?_=${_}" />
+		{{/if}}
 		</td>
 		<td class="dataCell numericalColumn size">${$.commaStyle(object.BodyLength)}</td>
 		<td class="dataCell">
@@ -152,15 +152,15 @@
 						<img class="icon" src="/s.gif" />
 						<a class="filename" href="${base_url}/${$value.name}" target="_blank">${$index}</a>
 						<div class="actionLinks">
-							{{if $value.name.match(/\.(?:txt|js|html|css|xml|bmp|jpg|jpeg|png|gif)$/)}}
+						{{if $value.name.match(/\.(?:txt|js|html|css|xml|bmp|jpg|jpeg|png|gif)$/)}}
 							[<a class="actionLink unzippreview" href="javascript:void(0);">Preview</a>]
-							{{/if}}
+						{{/if}}
 						</div>
 					</div>
 					<div class="image">
-						{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
+					{{if $value.name.match(/\.(?:bmp|jpg|jpeg|png|gif)$/)}}
 						<img class="thumbnail" src="${base_url}/${$value.name}" />
-						{{/if}}
+					{{/if}}
 					</div>
 					<div class="size">
 						${$.commaStyle($value.fileSize)}
