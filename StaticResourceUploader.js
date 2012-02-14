@@ -13,8 +13,8 @@ function require(option) {
 	script += '></" + "script>';
 	document.write(script);
 }
-css({src: 'http://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
-css({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css'});
+css({href: 'http://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
+css({href: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css'});
 require({src: 'https://raw.github.com/jquery/jquery-tmpl/master/jquery.tmpl.js'});
 require({src: 'https://github.com/yatt/jquery.base64/raw/master/jquery.base64.js'});
 require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.binddrag.js'});
