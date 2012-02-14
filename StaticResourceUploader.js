@@ -1,7 +1,7 @@
 var __sfdcSessionId;
 if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 
-function import(option) {
+function css(option) {
 	var link = '<' + 'link type="' + (option.type || 'text/css') + '" rel="' + (option.rel || 'stylesheet') + '" href="' + option.href + '" media="' + (option.media || 'screen') + '"';
 	if (option.id) link += ' id="' + option.id + '"';
 	link += ' />';
@@ -13,8 +13,8 @@ function require(option) {
 	script += '></" + "script>';
 	document.write(script);
 }
-import({src: 'http://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
-import({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css'});
+css({src: 'http://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
+css({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css'});
 require({src: 'https://raw.github.com/jquery/jquery-tmpl/master/jquery.tmpl.js'});
 require({src: 'https://github.com/yatt/jquery.base64/raw/master/jquery.base64.js'});
 require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.binddrag.js'});
