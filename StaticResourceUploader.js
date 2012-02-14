@@ -1,66 +1,28 @@
 var __sfdcSessionId;
 if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 
-(function ($) {
-	$.fn.extend({
-		imageSize: function(callback) {
-			this.each(function () {
-				var w = this.naturalWidth, h = this.naturalHeight;
-				callback.call(this, w, h);
-			});
-		},
-		bindDrag: function(options) {
-			this.each(function () {
-				var is_drag = false;
-				var self = $(this);
-				var identifier;
-				var touch_status = {
-					start:  {x: 0, y: 0},
-					before: {x: 0, y: 0},
-					point:  {x: 0, y: 0},
-					diff:   {x: 0, y: 0}
-				};
-				function getToucheEvent(e, identifier) {
-					var touches = event.touches || event.changedTouches || [e];
-					var touche;
-					if (!identifier) {
-						touche = $(touches).filter(function () {return this.target == self[0];});
-					} else {
-						touche = $(touches).filter(function () {return this.identifier == identifier;});
-					}
-					if (touche.length > 0) return touche[0];
-					return touches[0];
-				}
-				self.bind('touchstart mousedown', function(e) {
-					e.preventDefault();
-					is_drag = true;
-					var touche = getToucheEvent(e);
-					identifier = touche.identifier;
-					touch_status.start  = {x: touche.pageX, y: touche.pageY};
-					touch_status.before = {x: 0, y: 0};
-					touch_status.point  = touch_status.start;
-					touch_status.diff   = {x: 0, y: 0};
-					if (options.start) options.start.call(self, touch_status);
-				});
-				$(document).bind('touchmove mousemove', function(e) {
-					e.preventDefault();
-					if (!is_drag) return;
-					var touche = getToucheEvent(e, identifier);
-					touch_status.before = touch_status.point;
-					touch_status.point  = {x: touche.pageX, y: touche.pageY};
-					touch_status.diff.x = touch_status.point.x - touch_status.before.x;
-					touch_status.diff.y = touch_status.point.y - touch_status.before.y;
-					if (options.move) options.move.call(self, touch_status);
-				}).bind('touchend mouseup mouseleave', function(e) {
-					e.preventDefault();
-					if (!is_drag) return;
-					is_drag = false;
-					if (options.end) options.end.call(self, touch_status);
-				});
-			});
-		}
-	});
+function import(option) {
+	var link = '<' + 'link type="' + (option.type || 'text/css') + '" rel="' + (option.rel || 'stylesheet') + '" href="' + option.href + '" media="' + (option.media || 'screen') + '"';
+	if (option.id) link += ' id="' + option.id + '"';
+	link += ' />';
+	document.write(link);
+}
+function require(option) {
+	var script  = '<' + 'script type="' + (option.type || 'text/javascript') + '" src="' + option.src + '"';
+	if (option.id) script += ' id="' + option.id + '"';
+	script += '></" + "script>';
+	document.write(script);
+}
+import({src: 'http://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
+import({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css'});
+require({src: 'https://raw.github.com/jquery/jquery-tmpl/master/jquery.tmpl.js'});
+require({src: 'https://github.com/yatt/jquery.base64/raw/master/jquery.base64.js'});
+require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.binddrag.js'});
+require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.imagesize.js'});
+require({src: 'https://raw.github.com/hinassan/zipjs/master/zip.min.js'});
+require({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js'});
 
+(function ($) {
 	var is_cache_controll = true;
 
 	$.escapeHTML = function(val) {
