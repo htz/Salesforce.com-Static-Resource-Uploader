@@ -152,8 +152,10 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 			{
 				onSuccess: option.success,
 				onFailure: function () {
-					is_cache_controll = false;
-					getStaticResources(option);
+					if (is_cache_controll) {
+						is_cache_controll = false;
+						getStaticResources(option);
+					}
 				}
 			}
 		);
