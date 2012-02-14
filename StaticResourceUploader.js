@@ -1,3 +1,6 @@
+var __sfdcSessionId;
+if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
+
 function css(option) {
 	var link = '<' + 'link type="' + (option.type || 'text/css') + '" rel="' + (option.rel || 'stylesheet') + '" href="' + option.href + '" media="' + (option.media || 'screen') + '"';
 	if (option.id) link += ' id="' + option.id + '"';
@@ -19,9 +22,6 @@ require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploade
 require({src: 'https://raw.github.com/hinassan/zipjs/master/zip.min.js'});
 require({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js'});
 require({src: '/soap/ajax/23.0/connection.js'});
-
-var __sfdcSessionId;
-if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 
 (function ($) {
 	var is_cache_controll = true;
