@@ -23,7 +23,7 @@ require({src: 'https://raw.github.com/hinassan/zipjs/master/zip.min.js'});
 require({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js'});
 require({src: '/soap/ajax/23.0/connection.js'});
 /* require template  */
-require({id: 'staticresource_new:', src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/tmpl/staticresource_new.tmpl.js', type: 'text/x-jquery-tmpl'});
+require({id: 'staticresource_new', src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/tmpl/staticresource_new.tmpl.js', type: 'text/x-jquery-tmpl'});
 
 (function ($) {
 	var is_cache_controll = true;
