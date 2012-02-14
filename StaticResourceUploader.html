@@ -108,7 +108,7 @@
 	<div class="dummy">
 		<input id="linenumber" type="checkbox" {{if linenumber}}checked="checked" {{/if}}/>
 		<label for="linenumber">Line number</label><br/>
-		<pre id="${id}" class="prettyprint{{if linenumber}} linenums{{/if}}">{{html text}}</pre>
+		<pre id="${id}" class="prettyprint{{if linenumber}} linenums{{/if}}">${text}</pre>
 	</div>
 </script>
 <script id="preview_image" type="text/x-jquery-tmpl">

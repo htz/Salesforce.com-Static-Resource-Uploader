@@ -1,4 +1,4 @@
-var __sfdcSessionId;($('.unzipRow'));
+var __sfdcSessionId;
 if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 
 (function ($) {
@@ -540,7 +540,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						success: function(body) {
 							showPreview(object.Name, $('#preview_text').tmpl({
 								linenumber: linenumber,
-								text: body
+								text: $.escapeHTML(body)
 							}).html());
 						}
 					});
@@ -561,7 +561,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 						success: function(body) {
 							showPreview(fname, $('#preview_text').tmpl({
 								linenumber: linenumber,
-								text: body
+								text: $.escapeHTML(body)
 							}).html());
 						}
 					});
