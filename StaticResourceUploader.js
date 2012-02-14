@@ -21,6 +21,7 @@ require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploade
 require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.imagesize.js'});
 require({src: 'https://raw.github.com/hinassan/zipjs/master/zip.min.js'});
 require({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js'});
+require({src: '/soap/ajax/23.0/connection.js'});
 
 (function ($) {
 	var is_cache_controll = true;
