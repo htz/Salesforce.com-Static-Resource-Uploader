@@ -7,7 +7,7 @@ function css(option) {
 function require(option) {
 	var script  = '<' + 'script type="' + (option.type || 'text/javascript') + '" src="' + option.src + '"';
 	if (option.id) script += ' id="' + option.id + '"';
-	script += '></" + "script>';
+	script += '></' + 'script>';
 	document.write(script);
 }
 css({href: 'http://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
