@@ -600,36 +600,40 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 										$(this).parents('li.highlight').removeClass('highlight');
 								}
 							});
-						var tdwidth = $('#edittab #staticresourcelist tbody tr:first-child td').map(function () {
-							var w = {
-								width: $(this).width() + parseInt($(this).css('padding-left')) + parseInt($(this).css('padding-right')),
-								css: {
-									width: $(this).width(),
-									padding: $(this).css('padding'),
-									padding_left: parseInt($(this).css('padding-left')),
-									padding_right: parseInt($(this).css('padding-right'))
-								}
-							};
-							return w;
-						});
-						row.find('.name').each(function () {
-							$(this).css({
-								width: tdwidth[2].width + tdwidth[3].width + tdwidth[4].width + tdwidth[5].width
-									- tdwidth[2].css.padding_left - tdwidth[2].css.padding_right
-									- ($(this).parents('ul.ziptree').length - 1) * 16
-							});
-						});
-						row.find('.image').css({
-							width: tdwidth[6].css.width,
-							'padding-left': tdwidth[6].css.padding_left,
-							'padding-right': tdwidth[6].css.padding_right
-						});
-						row.find('.size').css({
-							width: tdwidth[7].css.width,
-							'padding-left': tdwidth[7].css.padding_left,
-							'padding-right': tdwidth[7].css.padding_right
-						});
+						resizeUnzipTree(row);
 					});
+				});
+			}
+
+			function resizeUnzipTree(target) {
+				var tdwidth = $('#edittab #staticresourcelist tbody tr:first-child td').map(function () {
+					var w = {
+						width: $(this).width() + parseInt($(this).css('padding-left')) + parseInt($(this).css('padding-right')),
+						css: {
+							width: $(this).width(),
+							padding: $(this).css('padding'),
+							padding_left: parseInt($(this).css('padding-left')),
+							padding_right: parseInt($(this).css('padding-right'))
+						}
+					};
+					return w;
+				});
+				target.find('.name').each(function () {
+					$(this).css({
+						width: tdwidth[2].width + tdwidth[3].width + tdwidth[4].width + tdwidth[5].width
+							- tdwidth[2].css.padding_left - tdwidth[2].css.padding_right
+							- ($(this).parents('ul.ziptree').length - 1) * 16
+					});
+				});
+				target.find('.image').css({
+					width: tdwidth[6].css.width,
+					'padding-left': tdwidth[6].css.padding_left,
+					'padding-right': tdwidth[6].css.padding_right
+				});
+				target.find('.size').css({
+					width: tdwidth[7].css.width,
+					'padding-left': tdwidth[7].css.padding_left,
+					'padding-right': tdwidth[7].css.padding_right
 				});
 			}
 
