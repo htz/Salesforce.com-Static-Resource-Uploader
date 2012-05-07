@@ -19,7 +19,7 @@ require({src: 'https://raw.github.com/jquery/jquery-tmpl/master/jquery.tmpl.js'}
 require({src: 'https://github.com/yatt/jquery.base64/raw/master/jquery.base64.js'});
 require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.binddrag.js'});
 require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.imagesize.js'});
-require({src: 'https://raw.github.com/hinassan/zipjs/master/zip.min.js'});
+require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/zip.min.js'});
 require({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js'});
 require({src: '/soap/ajax/23.0/connection.js'});
 
