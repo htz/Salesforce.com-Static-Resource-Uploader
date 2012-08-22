@@ -718,7 +718,7 @@ require({src: '/soap/ajax/23.0/connection.js'});
 				var option = {where: {}, order: {}};
 				if ($('#edittab #filter #name').val().length > 0)
 					option.where.name = $('#edittab #filter #name').val();
-				if ($('#edittab #filter #prefix').val().length > 0)
+				if ($('#edittab #filter #prefix').val() && $('#edittab #filter #prefix').val().length > 0)
 					option.where.prefix = $('#edittab #filter #prefix').val();
 				if ($('#edittab #filter #type').val() && $('#edittab #filter #type').val().length > 0)
 					option.where.type = $('#edittab #filter #type').val();
