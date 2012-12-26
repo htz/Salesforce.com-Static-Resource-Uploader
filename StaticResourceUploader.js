@@ -13,7 +13,7 @@ function require(option) {
 	script += '></' + 'script>';
 	document.write(script);
 }
-css({href: 'http://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
+css({href: 'https://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
 css({href: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css'});
 require({src: 'https://raw.github.com/jquery/jquery-tmpl/master/jquery.tmpl.js'});
 require({src: 'https://github.com/yatt/jquery.base64/raw/master/jquery.base64.js'});
@@ -21,10 +21,17 @@ require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploade
 require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.imagesize.js'});
 require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/zip.min.js'});
 require({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js'});
-require({src: '/soap/ajax/23.0/connection.js'});
+require({src: '/soap/ajax/25.0/connection.js'});
 
 (function ($) {
 	var is_cache_controll = true;
+	var page_info = {
+		max_records: 0,
+		recrds: [],
+		page_size: 0,
+		max_page: 0,
+		page_number: 0,
+	};
 
 	$.escapeHTML = function(val) {
 		if (!val) return '';
@@ -120,12 +127,12 @@ require({src: '/soap/ajax/23.0/connection.js'});
 
 	/* Get Static Resource */
 	function getStaticResources(option) {
-		var soql = [
-			'Select Id, SystemModstamp, NamespacePrefix, Name, LastModifiedDate, LastModifiedById, ' +
-			'Description, CreatedDate, CreatedById, ContentType, CacheControl, BodyLength ' +
-			'From StaticResource'
-		];
-		if (!is_cache_controll) soql[0] = soql[0].replace(/CacheControl, /, '');
+		var base_soql = 'Select ' +
+			'Id, SystemModstamp, NamespacePrefix, Name, LastModifiedDate, LastModifiedById, ' +
+			'Description, CreatedDate, CreatedById, ContentType, CacheControl, BodyLength';
+		if (!is_cache_controll) base_soql = base_soql.replace(/CacheControl, /, '');
+
+		var soql_options = ['From StaticResource'];
 		if (option) {
 			if (option.where) {
 				var soql_where = [];
@@ -136,20 +143,29 @@ require({src: '/soap/ajax/23.0/connection.js'});
 				}
 				if (option.where.prefix && option.where.prefix.length > 0) soql_where.push("NamespacePrefix = '" + soqlStringEscape(option.where.prefix) + "'");
 				if (option.where.cache) soql_where.push("CacheControl = '" + soqlStringEscape(option.where.cache) + "'");
-				if (soql_where.length > 0) soql.push('Where ' + soql_where.join(' And '));
+				if (soql_where.length > 0) soql_options.push('Where ' + soql_where.join(' And '));
 			}
 			if (option.order) {
-				soql.push('Order by ' + option.order.by + ' ' + option.order.asc);
+				soql_options.push('Order by ' + option.order.by + ' ' + option.order.asc);
 			}
-			if (option.limit) soql.push('Limit ' + option.limit);
-			if (option.offset) soql.push('Offset ' + option.offset);
 		}
-		console.log('SOQL:' + soql.join(' '));
+		var soql = base_soql + ' ' + soql_options.join(' ');
+		console.log('SOQL:' + soql);
 
 		sforce.connection.query(
-			soql.join(' '),
+			soql,
 			{
-				onSuccess: option.success,
+				onSuccess: function (res, source) {
+					with (page_info) {
+						max_records = parseInt(res.size);
+						recrds = res.records;
+						page_size = option.limit;
+						max_page = Math.floor((max_records - 1) / page_size);
+						page_number = 1;
+						var offset = page_size * (page_number - 1);
+						option.success(recrds.slice(offset, offset + page_size));
+					}
+				},
 				onFailure: function () {
 					if (is_cache_controll) {
 						is_cache_controll = false;
@@ -158,6 +174,17 @@ require({src: '/soap/ajax/23.0/connection.js'});
 				}
 			}
 		);
+	}
+
+	/* Change Page */
+	function changePage(option) {
+		with (page_info) {
+			if (option.limit) page_size = option.limit;
+			max_page = Math.floor((max_records - 1) / page_size);
+			if (option.page) page_number = option.page;
+			var offset = page_size * (page_number - 1);
+			option.success(recrds.slice(offset, offset + page_size));
+		}
 	}
 
 	/* Get Static Resource */
@@ -713,6 +740,19 @@ require({src: '/soap/ajax/23.0/connection.js'});
 				});
 			}
 
+			function refreshSuccessCallback(records) {
+				static_resources = {};
+				$('#edittab #staticresourcelist tbody tr').remove();
+				$('#edittab #staticresourcelist #selectall').removeAttr('checked');
+				$('#edittab #filter #deleteselected').attr('disabled', 'disabled');
+				$(records).each(function () {
+					$('#edittab #staticresourcelist #page').val(page_info.page_number);
+					$('#edittab #staticresourcelist #maxpage').text(page_info.max_page);
+					static_resources[toSrId(this.Id)] = this;
+					addRow(toSrId(this.Id));
+				});
+			}
+
 			/* refresh table */
 			function refreshStaticResourceTable(e) {
 				var option = {where: {}, order: {}};
@@ -726,19 +766,10 @@ require({src: '/soap/ajax/23.0/connection.js'});
 					option.where.cache = $('#edittab #filter #cache').val();
 				option.order.by = $('#edittab #filter #order').val();
 				option.order.asc = $('#edittab #filter #asc').val();
-				option.limit = $('#edittab #filter #limit').val();
-				var page = $('#edittab #staticresourcelist #page').val();
-				option.offset = option.limit * (page - 1);
-				option.success = function (res, source) {
-					static_resources = {};
-					$('#edittab #staticresourcelist tbody tr').remove();
-					$('#edittab #staticresourcelist #selectall').removeAttr('checked');
-					$('#edittab #filter #deleteselected').attr('disabled', 'disabled');
-					$(res.records).each(function () {
-						static_resources[toSrId(this.Id)] = this;
-						addRow(toSrId(this.Id));
-					});
-				};
+				option.limit = parseInt($('#edittab #staticresourcelist #limit').val());
+				$('#edittab #staticresourcelist #page').val(1);
+				option.offset = 0;
+				option.success = refreshSuccessCallback;
 				getStaticResources(option);
 			}
 
@@ -829,6 +860,60 @@ require({src: '/soap/ajax/23.0/connection.js'});
 			});
 			$(window).bind('resize', function () {
 				resizeUnzipTree($('.unzipRow'));
+			});
+			// paging
+			$('#edittab #staticresourcelist .prevNext a#firstbutton').bind('click', function () {
+				if (page_info.page_number == 1) return;
+				var option = {
+					page: 1,
+					success: refreshSuccessCallback,
+				};
+				changePage(option);
+			});
+			$('#edittab #staticresourcelist .prevNext a#prevbutton').bind('click', function () {
+				if (page_info.page_number == 1) return;
+				var option = {
+					page: Math.max(page_info.page_number - 1, 1),
+					success: refreshSuccessCallback,
+				};
+				changePage(option);
+			});
+			$('#edittab #staticresourcelist .prevNext a#nextbutton').bind('click', function () {
+				if (page_info.page_number == page_info.max_page) return;
+				var option = {
+					page: Math.min(page_info.page_number + 1, page_info.max_page),
+					success: refreshSuccessCallback,
+				};
+				changePage(option);
+			});
+			$('#edittab #staticresourcelist .prevNext a#lastbutton').bind('click', function () {
+				if (page_info.page_number == page_info.max_page) return;
+				var option = {
+					page: page_info.max_page,
+					limit: parseInt($('#edittab #staticresourcelist #limit').val()),
+					success: refreshSuccessCallback,
+				};
+				changePage(option);
+			});
+			$('#edittab #staticresourcelist #limit').bind('change', function () {
+				var option = {
+					page: 1,
+					limit: parseInt($('#edittab #staticresourcelist #limit').val()),
+					success: refreshSuccessCallback,
+				};
+				changePage(option);
+			});
+			$('#edittab #staticresourcelist #page').bind('change', function () {
+				var page = $('#edittab #staticresourcelist #page').val();
+				if (page < 1 || page > page_info.max_page) {
+					$('#edittab #staticresourcelist #page').val(page_info.page_number);
+					return;
+				}
+				var option = {
+					page: parseInt($('#edittab #staticresourcelist #page').val()),
+					success: refreshSuccessCallback,
+				};
+				changePage(option);
 			});
 
 			/* initialize */

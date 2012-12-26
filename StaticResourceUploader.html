@@ -249,16 +249,6 @@
 							<option value="Public">Public</option>
 						</select>
 					</dd>
-					<!-- dt>Limit:</dt>
-					<dd>
-						<select id="limit">
-							<option value="10">10</option>
-							<option value="25">25</option>
-							<option value="50">50</option>
-							<option value="100">100</option>
-							<option value="200">200</option>
-						</select>
-					</dd -->
 					<dt>
 						<input id="refresh" type="button" value="Refresh" />
 						&nbsp;|&nbsp;
@@ -282,41 +272,56 @@
 						<th scope="col" class="noorder">Error</th>
 					</tr>
 				</thead>
-				<!-- tfoot>
+				<tfoot>
 					<tr>
 						<td colspan="10">
 							<div class="paginator">
+								<span class="left">
+									<select id="limit">
+										<option value="10">10</option>
+										<option value="25">25</option>
+										<option value="50">50</option>
+										<option value="100">100</option>
+										<option value="200">200</option>
+									</select>
+									Records/Page
+								</span>
 								<span class="prevNextLinks">
 									<span class="prevNext">
-										<a href="javascript:void(0);">
+										<a href="javascript:void(0);" id="firstbutton">
 											<img src="/s.gif" title="First Page" alt="First Page" class="first" />
 										</a>
 									</span>
 									<span class="prevNext">
-										<a href="javascript:void(0);">
+										<a href="javascript:void(0);" id="prevbutton">
 											<img src="/s.gif" title="Previous" alt="Previous" class="prev" />
 											Previous
 										</a>
 									</span>
 									<span class="prevNext">
-										<a href="javascript:void(0);">
+										<a href="javascript:void(0);" id="nextbutton">
 											Next
 											<img src="/s.gif" title="Next" alt="Next" class="next" />
 										</a>
 									</span>
-									<a href="javascript:void(0);">
-										<img src="/s.gif" title="Last Page" alt="Last Page" class="last" />
-									</a>
+									<span class="prevNext">
+										<a href="javascript:void(0);" id="lastbutton">
+											<img src="/s.gif" title="Last Page" alt="Last Page" class="last" />
+										</a>
+									</span>
 								</span>
 								<span class="right">
+									/Page
+									&nbsp;
 									Page
 									<input id="page" class="pageInput" type="number" maxlength="4" onchange="void();" onkeydown="" value="1">
-									of n
+									of
+									<span id="maxpage">0</span>
 								</span>
 							</div>
 						</td>
 					</tr>
-				</tfoot -->
+				</tfoot>
 				<tbody>
 				</tbody>
 			</table>
