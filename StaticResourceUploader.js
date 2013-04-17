@@ -766,7 +766,7 @@ require({src: '/soap/ajax/25.0/connection.js'});
 					option.where.cache = $('#edittab #filter #cache').val();
 				option.order.by = $('#edittab #filter #order').val();
 				option.order.asc = $('#edittab #filter #asc').val();
-				option.limit = parseInt($('#edittab #staticresourcelist #limit').val());
+				option.limit = parseInt($('#edittab #staticresourcelist #limit').val() || 50);
 				$('#edittab #staticresourcelist #page').val(1);
 				option.offset = 0;
 				option.success = refreshSuccessCallback;
