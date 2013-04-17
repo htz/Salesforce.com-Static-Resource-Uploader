@@ -735,7 +735,7 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					option.where.cache = $('#edittab #filter #cache').val();
 				option.order.by = $('#edittab #filter #order').val();
 				option.order.asc = $('#edittab #filter #asc').val();
-				option.limit = $('#edittab #filter #limit').val();
+				option.limit = parseInt($('#edittab #filter #limit').val() || 50);
 				var page = $('#edittab #staticresourcelist #page').val();
 				option.offset = option.limit * (page - 1);
 				option.success = function (res, source) {
