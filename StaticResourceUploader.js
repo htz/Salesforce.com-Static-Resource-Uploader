@@ -158,12 +158,13 @@ require({src: '/soap/ajax/25.0/connection.js'});
 				onSuccess: function (res, source) {
 					with (page_info) {
 						max_records = parseInt(res.size);
-						recrds = res.records;
+						records = res.records;
+						if (!$.isArray(record)) record = [record];
 						page_size = option.limit;
 						max_page = Math.floor((max_records - 1) / page_size);
 						page_number = 1;
 						var offset = page_size * (page_number - 1);
-						option.success(recrds.slice(offset, offset + page_size));
+						option.success(records.slice(offset, offset + page_size));
 					}
 				},
 				onFailure: function () {
