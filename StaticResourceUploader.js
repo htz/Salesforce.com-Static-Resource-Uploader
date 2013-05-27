@@ -13,13 +13,13 @@ function require(option) {
 	script += '></' + 'script>';
 	document.write(script);
 }
-css({href: 'https://dl.dropbox.com/u/238452/StaticResourceUploader.css'});
+css({href: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/StaticResourceUploader.css'});
 css({href: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css'});
-require({src: 'https://raw.github.com/jquery/jquery-tmpl/master/jquery.tmpl.js'});
-require({src: 'https://github.com/yatt/jquery.base64/raw/master/jquery.base64.js'});
-require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.binddrag.js'});
-require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.imagesize.js'});
-require({src: 'https://raw.github.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/zip.min.js'});
+require({src: 'https://rawgithub.com/jquery/jquery-tmpl/master/jquery.tmpl.js'});
+require({src: 'https://rawgithub.com/yatt/jquery.base64/master/jquery.base64.js'});
+require({src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.binddrag.js'});
+require({src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.imagesize.js'});
+require({src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/zip.min.js'});
 require({src: 'https://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js'});
 require({src: '/soap/ajax/25.0/connection.js'});
 
