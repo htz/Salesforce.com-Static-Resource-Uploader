@@ -27,7 +27,7 @@ require({src: '/soap/ajax/25.0/connection.js'});
 	var is_cache_controll = true;
 	var page_info = {
 		max_records: 0,
-		recrds: [],
+		records: [],
 		page_size: 0,
 		max_page: 0,
 		page_number: 0,
@@ -157,14 +157,15 @@ require({src: '/soap/ajax/25.0/connection.js'});
 			{
 				onSuccess: function (res, source) {
 					with (page_info) {
-						max_records = parseInt(res.size);
-						records = res.records;
-						if (!$.isArray(record)) record = [record];
-						page_size = option.limit;
-						max_page = Math.floor((max_records - 1) / page_size);
-						page_number = 1;
-						var offset = page_size * (page_number - 1);
-						option.success(records.slice(offset, offset + page_size));
+						page_info.max_records = parseInt(res.size);
+						var records = res.records;
+						if (!$.isArray(records)) records = [records];
+						page_info.records = records;
+						page_info.page_size = option.limit;
+						page_info.max_page = Math.floor((page_info.max_records - 1) / page_info.page_size);
+						page_info.page_number = 1;
+						var offset = page_info.page_size * (page_info.page_number - 1);
+						option.success(page_info.records.slice(offset, offset + page_info.page_size));
 					}
 				},
 				onFailure: function () {
@@ -180,11 +181,11 @@ require({src: '/soap/ajax/25.0/connection.js'});
 	/* Change Page */
 	function changePage(option) {
 		with (page_info) {
-			if (option.limit) page_size = option.limit;
-			max_page = Math.floor((max_records - 1) / page_size);
-			if (option.page) page_number = option.page;
-			var offset = page_size * (page_number - 1);
-			option.success(recrds.slice(offset, offset + page_size));
+			if (option.limit) page_info.page_size = option.limit;
+			page_info.max_page = Math.floor((page_info.max_records - 1) / page_info.page_size);
+			if (option.page) page_info.page_number = option.page;
+			var offset = page_info.page_size * (page_info.page_number - 1);
+			option.success(page_info.records.slice(offset, offset + page_info.page_size));
 		}
 	}
 
