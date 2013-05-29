@@ -392,31 +392,6 @@ require({src: '/soap/ajax/25.0/connection.js'});
 				}));
 				loadImageSize('#img_' + object.Id);
 				refreshListClass('#edittab #staticresourcelist');
-				/* drag event */
-				$('#edittab #staticresourcelist #' + id)
-				.bind('drop', function (e) {
-					e.stopPropagation();
-					e.preventDefault();
-					$(this).removeClass('dragenter');
-					/* upload file */
-					var files = e.originalEvent.dataTransfer.files;
-					if (files.length == 1) {
-						var id = $(this).attr('id');
-						editRow(id, files[0]);
-					} else {
-						alert('Please drag one file.');
-					}
-				})
-				.bind('dragenter dragover', function (e) {
-					e.stopPropagation();
-					e.preventDefault();
-					$(this).addClass('dragenter');
-				})
-				.bind('dragleave', function (e) {
-					e.stopPropagation();
-					e.preventDefault();
-					$(this).removeClass('dragenter');
-				});
 			}
 
 			/* replace view row */
@@ -862,6 +837,31 @@ require({src: '/soap/ajax/25.0/connection.js'});
 			});
 			$(window).bind('resize', function () {
 				resizeUnzipTree($('.unzipRow'));
+			});
+			/* drag event */
+			$('#edittab #staticresourcelist .dataRow')
+			.live('drop', function (e) {
+				e.stopPropagation();
+				e.preventDefault();
+				$(this).removeClass('dragenter');
+				/* upload file */
+				var files = e.originalEvent.dataTransfer.files;
+				if (files.length == 1) {
+					var id = $(this).attr('id');
+					editRow(id, files[0]);
+				} else {
+					alert('Please drag one file.');
+				}
+			})
+			.live('dragenter dragover', function (e) {
+				e.stopPropagation();
+				e.preventDefault();
+				$(this).addClass('dragenter');
+			})
+			.live('dragleave', function (e) {
+				e.stopPropagation();
+				e.preventDefault();
+				$(this).removeClass('dragenter');
 			});
 			// paging
 			$('#edittab #staticresourcelist .prevNext a#firstbutton').bind('click', function () {
