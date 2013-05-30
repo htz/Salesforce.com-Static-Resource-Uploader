@@ -619,10 +619,10 @@ if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 					var fname = path.pop();
 					var current = root;
 					$(path).each(function () {
-						if (!current[this]) current[this] = {};
+						if (!current[this]) current[this] = {'$dir': true};
 						current = current[this];
 					});
-					current[fname || '$dir'] = file;
+					current[fname] = file;
 				});
 				return root;
 			}
