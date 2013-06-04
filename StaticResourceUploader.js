@@ -742,6 +742,12 @@ require([
 					static_resources[toSrId(this.Id)] = this;
 					addRow(toSrId(this.Id));
 				});
+				var show_next = page_info.page_number < page_info.max_page;
+				var show_prev = page_info.page_number > 1;
+				$('#edittab #staticresourcelist .prevNext a#nextbutton').css("visibility", show_next ? "visible" : "hidden");
+				$('#edittab #staticresourcelist .prevNext a#lastbutton').css("visibility", show_next ? "visible" : "hidden");
+				$('#edittab #staticresourcelist .prevNext a#prevbutton').css("visibility", show_prev ? "visible" : "hidden");
+				$('#edittab #staticresourcelist .prevNext a#firstbutton').css("visibility", show_prev ? "visible" : "hidden");
 			}
 
 			/* refresh table */
