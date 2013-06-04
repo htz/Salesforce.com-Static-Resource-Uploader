@@ -1,27 +1,45 @@
 var __sfdcSessionId;
 if (document.cookie.match(/sid=([^;]+)/)) __sfdcSessionId = RegExp.$1;
 
-function css(option) {
-	var link = '<' + 'link type="' + (option.type || 'text/css') + '" rel="' + (option.rel || 'stylesheet') + '" href="' + option.href + '" media="' + (option.media || 'screen') + '"';
-	if (option.id) link += ' id="' + option.id + '"';
-	link += ' />';
-	document.write(link);
+function css(options) {
+	if (typeof options.length === "undefined") {
+		options = [options];
+	}
+	for (var i = 0; i < options.length; i++) {
+		var option = options[i];
+		var link = '<' + 'link type="' + (option.type || 'text/css') + '" rel="' + (option.rel || 'stylesheet') + '" href="' + option.href + '" media="' + (option.media || 'screen') + '"';
+		if (option.id) link += ' id="' + option.id + '"';
+		link += ' />';
+		document.write(link);
+	}
 }
-function require(option) {
-	var script  = '<' + 'script type="' + (option.type || 'text/javascript') + '" src="' + option.src + '"';
-	if (option.id) script += ' id="' + option.id + '"';
-	script += '></' + 'script>';
-	document.write(script);
+
+function require(options) {
+	if (typeof options.length === "undefined") {
+		options = [options];
+	}
+	for (var i = 0; i < options.length; i++) {
+		var option = options[i];
+		var script  = '<' + 'script type="' + (option.type || 'text/javascript') + '" src="' + option.src + '"';
+		if (option.id) script += ' id="' + option.id + '"';
+		script += '></' + 'script>';
+		document.write(script);
+	}
 }
-css({href: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/StaticResourceUploader.css'});
-css({href: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/prettify.css'});
-require({src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.tmpl.js'});
-require({src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.base64.js'});
-require({src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.binddrag.js'});
-require({src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.imagesize.js'});
-require({src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/zip.min.js'});
-require({src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/prettify.js'});
-require({src: '/soap/ajax/25.0/connection.js'});
+
+css([
+	{href: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/StaticResourceUploader.css'},
+	{href: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/prettify.css'}
+]);
+require([
+	{src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.tmpl.js'},
+	{src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.base64.js'},
+	{src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.binddrag.js'},
+	{src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/jquery.imagesize.js'},
+	{src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/zip.min.js'},
+	{src: 'https://rawgithub.com/htz/Salesforce.com-Static-Resource-Uploader/master/lib/prettify.js'},
+	{src: '/soap/ajax/25.0/connection.js'}
+]);
 
 (function ($) {
 	var is_cache_controll = true;
@@ -156,17 +174,15 @@ require({src: '/soap/ajax/25.0/connection.js'});
 			soql,
 			{
 				onSuccess: function (res, source) {
-					with (page_info) {
-						page_info.max_records = parseInt(res.size);
-						var records = res.records;
-						if (!$.isArray(records)) records = [records];
-						page_info.records = records;
-						page_info.page_size = option.limit;
-						page_info.max_page = Math.floor((page_info.max_records - 1) / page_info.page_size);
-						page_info.page_number = 1;
-						var offset = page_info.page_size * (page_info.page_number - 1);
-						option.success(page_info.records.slice(offset, offset + page_info.page_size));
-					}
+					page_info.max_records = parseInt(res.size);
+					var records = res.records;
+					if (!$.isArray(records)) records = [records];
+					page_info.records = records;
+					page_info.page_size = option.limit;
+					page_info.max_page = Math.floor((page_info.max_records - 1) / page_info.page_size);
+					page_info.page_number = 1;
+					var offset = page_info.page_size * (page_info.page_number - 1);
+					option.success(page_info.records.slice(offset, offset + page_info.page_size));
 				},
 				onFailure: function () {
 					if (is_cache_controll) {
@@ -180,13 +196,11 @@ require({src: '/soap/ajax/25.0/connection.js'});
 
 	/* Change Page */
 	function changePage(option) {
-		with (page_info) {
-			if (option.limit) page_info.page_size = option.limit;
-			page_info.max_page = Math.floor((page_info.max_records - 1) / page_info.page_size);
-			if (option.page) page_info.page_number = option.page;
-			var offset = page_info.page_size * (page_info.page_number - 1);
-			option.success(page_info.records.slice(offset, offset + page_info.page_size));
-		}
+		if (option.limit) page_info.page_size = option.limit;
+		page_info.max_page = Math.floor((page_info.max_records - 1) / page_info.page_size);
+		if (option.page) page_info.page_number = option.page;
+		var offset = page_info.page_size * (page_info.page_number - 1);
+		option.success(page_info.records.slice(offset, offset + page_info.page_size));
 	}
 
 	/* Get Static Resource */
